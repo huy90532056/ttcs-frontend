@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { setToken } from "../services/localStorageService";
 import { Box, CircularProgress, Typography } from "@mui/material";
+import authorizedAxiosInstance from "../utils/authorizedAxios";
 
 export default function Authenticate() {
   const navigate = useNavigate();
@@ -15,21 +16,20 @@ export default function Authenticate() {
 
     if (isMatch) {
       const authCode = isMatch[1];
-
-      fetch(
-        `http://localhost:8080/ecommerce/auth/outbound/authentication?code=${authCode}`,
-        {
-          method: "POST",
-        }
-      )
+    
+      // Thay thế fetch bằng axios từ authorizedAxiosInstance
+      authorizedAxiosInstance
+        .post(`http://localhost:8080/ecommerce/auth/outbound/authentication?code=${authCode}`)
         .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
+          const data = response.data;
+    
           console.log(data);
-
+    
           setToken(data.result?.token);
           setIsLoggedin(true);
+        })
+        .catch((error) => {
+          console.error("Error during authentication:", error);
         });
     }
   }, []);

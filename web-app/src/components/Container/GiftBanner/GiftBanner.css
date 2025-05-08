@@ -1,0 +1,16 @@
+.gift-banner {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 32px 0 24px 0; /* Thêm margin trên/dưới để tách ra */
+    background: #f5f5f5;    /* Màu nền nhẹ để phân biệt */
+    padding: 24px 0;        /* Padding trên/dưới cho thoáng */
+    border-radius: 4px;
+  }
+  
+  .gift-banner img {
+    max-width: 1200px;
+    width: 100%;
+    border-radius: 4px;
+    background: transparent;
+  }

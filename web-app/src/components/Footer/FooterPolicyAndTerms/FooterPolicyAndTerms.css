@@ -1,0 +1,47 @@
+.footer-policy-terms {
+    background: #f8f8f8;
+    text-align: center;
+    padding: 32px 0 16px 0;
+    font-size: 15px;
+    color: #555;
+  }
+  
+  .footer-policy-terms__links {
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: #888;
+  }
+  
+  .footer-policy-terms__links a {
+    color: #888;
+    text-decoration: none;
+    margin: 0 8px;
+    font-weight: 500;
+  }
+  
+  .footer-policy-terms__links span {
+    margin: 0 4px;
+    color: #ccc;
+  }
+  
+  .footer-policy-terms__certs {
+    margin-bottom: 20px;
+  }
+  
+  .footer-policy-terms__certs img {
+    height: 48px;
+    margin: 0 8px;
+    vertical-align: middle;
+  }
+  
+  .footer-policy-terms__company {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #444;
+  }
+  
+  .footer-policy-terms__desc {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.7;
+  }

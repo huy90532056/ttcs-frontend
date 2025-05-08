@@ -13,7 +13,23 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { logOut } from "../../services/authenticationService";
+import { handleLogoutAPI } from "../../apis";
+
+
+import {
+  HeaderAppGalleryIcon,
+  HeaderAppStoreIcon,
+  HeaderGooglePlayIcon,
+  HeaderQRCodeImage,
+  HeaderNotificationWhenNotLoginIcon,
+  HeaderCartImage,
+  HeaderSearchVoucherHoanXuBanner,
+} from "../../assets/images";
+
+import shopeeLogiImg from "../../assets/images/header/header__cart/Shopee.svg.webp";
+
+
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -81,7 +97,7 @@ export default function Header() {
 
   const handleLogout = (event) => {
     handleMenuClose();
-    logOut();
+    handleLogoutAPI()
     window.location.href = "/login";
   };
 

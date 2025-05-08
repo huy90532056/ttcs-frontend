@@ -12,6 +12,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import authorizedAxiosInstance from "../utils/authorizedAxios";
+import NewHeader from "./header";
+import Slider from "./Container/Slider/Slider";
+import Container from "./Container/Container";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -41,51 +45,41 @@ export default function Home() {
     setSnackBarOpen(true);
   };
 
-  const getUserDetails = async (accessToken) => {
-    const response = await fetch(
-      "http://localhost:8080/ecommerce/users/myInfo",
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-
-    const data = await response.json();
-
-    console.log(data.result);
-
-    setUserDetails(data.result);
+  const getUserDetails = async () => {
+    try {
+      const response = await authorizedAxiosInstance.get(
+        "http://localhost:8080/ecommerce/users/myInfo"
+      );
+  
+      console.log(response.data.result);
+      setUserDetails(response.data.result);
+    } catch (error) {
+      console.error("Failed to fetch user details:", error);
+    }
   };
 
-  const addPassword = (event) => {
+  const addPassword = async (event) => {
     event.preventDefault();
-
+  
     const body = {
       password: password,
     };
-
-    fetch("http://localhost:8080/ecommerce/users/create-password", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getToken()}`,
-      },
-      body: JSON.stringify(body),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        if (data.code != 1000) throw new Error(data.message);
-
-        getUserDetails(getToken());
-        showSuccess(data.message);
-      })
-      .catch((error) => {
-        showError(error.message);
-      });
+  
+    try {
+      const response = await authorizedAxiosInstance.post(
+        "http://localhost:8080/ecommerce/users/create-password",
+        body
+      );
+  
+      const data = response.data;
+  
+      if (data.code !== 1000) throw new Error(data.message);
+  
+      getUserDetails(getToken());
+      showSuccess(data.message);
+    } catch (error) {
+      showError(error.message);
+    }
   };
 
   useEffect(() => {
@@ -100,7 +94,8 @@ export default function Home() {
 
   return (
     <>
-      <Header></Header>
+      <NewHeader></NewHeader>
+      <Container></Container>
       <Snackbar
         open={snackBarOpen}
         onClose={handleCloseSnackBar}

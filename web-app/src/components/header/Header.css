@@ -1,0 +1,85 @@
+/* Nền header */
+header.bg-orange-500 {
+    background: #f53d2d !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    border-radius: 8px 8px 0 0;
+  }
+  
+  /* Top bar */
+  header .container-fluid.py-1 {
+    font-size: 14px;
+    color: #fff;
+    min-height: 36px;
+  }
+  
+  /* Top bar link */
+  header .container-fluid.py-1 span,
+  header .container-fluid.py-1 i {
+    vertical-align: middle;
+    cursor: pointer;
+  }
+  
+  header .container-fluid.py-1 .fw-bold {
+    font-weight: 700 !important;
+  }
+  
+  /* Main header */
+  header .container-fluid.py-3 {
+    align-items: center;
+    min-height: 72px;
+  }
+  
+  /* Logo */
+  header .d-flex.align-items-center img[alt="Shopee"] {
+    width: 50px;
+    margin-right: 8px;
+  }
+  
+  header .d-flex.align-items-center span {
+    font-size: 32px;
+    font-weight: 600;
+    color: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+  
+  /* Search box */
+  header .flex-grow-1 .form-control {
+    height: 44px;
+    border-radius: 4px;
+    font-size: 16px;
+    border: none;
+  }
+  
+  header .flex-grow-1 .btn-light {
+    border-radius: 4px;
+    background: #fff;
+    border: none;
+    height: 44px;
+    width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  header .flex-grow-1 .btn-light i {
+    font-size: 20px;
+    color: #f53d2d;
+  }
+  
+  /* Suggestion keywords */
+  header .flex-grow-1 .d-flex.mt-2 span {
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    transition: text-decoration 0.2s;
+  }
+  
+  header .flex-grow-1 .d-flex.mt-2 span:hover {
+    text-decoration: underline;
+  }
+  
+  /* Cart icon */
+  header .d-flex.align-items-center img[alt="Cart"] {
+    width: 32px;
+    cursor: pointer;
+  }

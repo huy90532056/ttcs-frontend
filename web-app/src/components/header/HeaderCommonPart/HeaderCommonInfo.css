@@ -1,0 +1,115 @@
+.header-common {
+    background: #F94F2F;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    padding: 6px 32px 0 32px;
+  }
+  
+  .header-top-left a,
+  .header-top-right a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 4px;
+  }
+  
+  .header-top-left span,
+  .header-top-right span {
+    margin: 0 4px;
+    opacity: 0.7;
+  }
+  
+  .header-icon {
+    margin: 0 4px;
+    vertical-align: middle;
+  }
+  
+  .header-link-bold {
+    font-weight: bold;
+  }
+  
+  .header-main {
+    display: flex;
+    align-items: center;
+    padding: 12px 32px 0 32px;
+  }
+  
+  .header-logo {
+    display: flex;
+    align-items: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 32px;
+  }
+  
+  .header-logo img {
+    height: 40px;
+    margin-right: 8px;
+  }
+  
+  .header-search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-search input {
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 2px 0 0 2px;
+    font-size: 16px;
+    outline: none;
+    color: #333;
+  }
+  
+  .header-search button {
+    background: #ee4d2d;
+    border: none;
+    border-radius: 0 2px 2px 0;
+    padding: 0 18px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-cart {
+    margin-left: 32px;
+    cursor: pointer;
+  }
+  
+  .header-suggest {
+    display: flex;
+    padding: 8px 32px;
+    font-size: 14px;
+    gap: 122px;
+    justify-content: center;
+  }
+  
+  .header-suggest a {
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+  }
+  
+  .header-suggest a:hover {
+    opacity: 1;
+  }
+
+  .header-logo img {
+    height: 62px; /* tăng từ 40px lên 56px hoặc giá trị bạn muốn */
+    margin-right: 8px;
+    width: auto;
+  }
