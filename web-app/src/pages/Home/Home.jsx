@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getToken } from "../services/localStorageService";
-import Header from "./header/Header";
+import { getToken } from "../../services/localStorageService";
 import {
   Alert,
   Box,
@@ -12,10 +11,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import authorizedAxiosInstance from "../utils/authorizedAxios";
-import NewHeader from "./header";
-import Slider from "./Container/Slider/Slider";
-import Container from "./Container/Container";
+import authorizedAxiosInstance from "../../utils/authorizedAxios";
+import NewHeader from "../../components/header";
+import Container from "../../components/Container/Container";
 
 export default function Home() {
   const navigate = useNavigate();

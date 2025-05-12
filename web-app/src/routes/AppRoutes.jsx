@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "../components/Login/Login";
-import Home from "../components/Home";
-import Authenticate from "../components/Authenticate";
-import Header from "../components/header/Header";
-import Dashboard from "../components/Dashboard";
-import LoginPage from "../components/Login";
+import Authenticate from "../pages/Authenticate/Authenticate";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import Home from "../pages/Home/Home";
+import CategoryProductPage from "../pages/CategoryProductPage/CategoryProductPage";
+import LoginPage from "../pages/Login";
+import ProductPage from "../pages/ProductPage/ProductPage";
 
 const AppRoutes = () => {
   return (
@@ -14,6 +14,8 @@ const AppRoutes = () => {
         <Route path="/authenticate" element={<Authenticate />} />
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/category/:categoryId" element={<CategoryProductPage />} />
+        <Route path="/product/:productId" element={<ProductPage />} />
       </Routes>
     </Router>
   );

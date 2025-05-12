@@ -1,5 +1,5 @@
-import FooterLink from "../Footer/FooterLink/FooterLink";
-import FooterPolicyAndTerms from "../Footer/FooterPolicyAndTerms/FooterPolicyAndTerms";
+import FooterLink from "../../components/Footer/FooterLink/FooterLink";
+import FooterPolicyAndTerms from "../../components/Footer/FooterPolicyAndTerms/FooterPolicyAndTerms";
 import Login from "./Login";
 
 function LoginPage() {

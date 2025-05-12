@@ -1,0 +1,101 @@
+.directory-container {
+    background: #fff;
+    border-radius: 8px;
+    margin: 32px auto 0 auto;
+    padding: 0 0 32px 0;
+    max-width: 1240px;
+    box-shadow: none;
+  }
+  
+  .directory-title {
+    font-size: 20px;
+    font-weight: 600;
+    padding: 24px 0 8px 0;
+    color: #222;
+    background: #fff;
+    text-align: left;
+    border: none;
+    letter-spacing: 0.5px;
+    margin-left: 16px;
+  }
+  
+  .directory-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: #fff;
+  }
+  
+  .directory-arrow {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 0 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  
+  .directory-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #f2f2f2;
+    border-left: 1px solid #f2f2f2;
+  }
+  
+  .directory-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 18px 0 10px 0;
+    background: #fff;
+    border-right: 1px solid #f2f2f2;
+    border-bottom: 1px solid #f2f2f2;
+    box-shadow: none;
+    transition: background 0.2s;
+  }
+  
+  .directory-img-wrapper {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    border: none;
+    overflow: hidden;
+  }
+  
+  .directory-img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+  }
+  
+  .directory-name {
+    font-size: 15px;
+    color: #222;
+    text-align: center;
+    margin-top: 6px;
+    line-height: 1.2;
+    min-height: 36px;
+    max-width: 110px;
+    word-break: break-word;
+    background: #fff;
+    border: none;
+    box-shadow: none;
+  }

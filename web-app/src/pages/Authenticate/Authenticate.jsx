@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { setToken } from "../services/localStorageService";
+import { setToken } from "../../services/localStorageService";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import authorizedAxiosInstance from "../utils/authorizedAxios";
+import authorizedAxiosInstance from "../../utils/authorizedAxios";
 
 export default function Authenticate() {
   const navigate = useNavigate();

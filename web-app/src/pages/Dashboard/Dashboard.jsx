@@ -6,11 +6,11 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Divider from '@mui/material/Divider'
 import Paper from '@mui/material/Paper'
 import { toast } from 'react-toastify'
-import { API_ROOT } from '../utils/constants' 
-import authorizedAxiosInstance from '../utils/authorizedAxios' 
+import { API_ROOT } from '../../utils/constants' 
+import authorizedAxiosInstance from '../../utils/authorizedAxios' 
 import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { handleLogoutAPI } from '../apis'
+import { handleLogoutAPI } from '../../apis'
 
 function Dashboard() {
   const [users, setUsers] = useState([])

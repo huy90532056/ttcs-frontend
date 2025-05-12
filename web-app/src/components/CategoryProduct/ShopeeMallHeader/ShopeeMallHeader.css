@@ -1,0 +1,16 @@
+.mall-header-img-wrapper {
+    width: 1200px;
+    margin: 32px auto 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    display: flex;
+    justify-content: center;
+  }
+  
+  .mall-header-img {
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+  }
