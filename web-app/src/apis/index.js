@@ -61,3 +61,16 @@ export const fetchProductVariants = async (productId) => {
     );
     return response.data.result;
 };
+export const fetchAllProducts = async () => {
+    const response = await authorizedAxiosInstance.get(
+        `${API_ROOT}/ecommerce/products`
+    );
+    return response.data.result;
+};
+
+export const fetchAllInventories = async () => {
+    const response = await authorizedAxiosInstance.get(
+        `${API_ROOT}/ecommerce/inventories`
+    );
+    return response.data.result;
+};

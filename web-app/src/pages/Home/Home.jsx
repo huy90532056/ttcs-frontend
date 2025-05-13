@@ -14,6 +14,10 @@ import {
 import authorizedAxiosInstance from "../../utils/authorizedAxios";
 import NewHeader from "../../components/header";
 import Container from "../../components/Container/Container";
+import FooterText from "../../components/Footer/FooterText/FooterText";
+import FooterLink from "../../components/Footer/FooterLink/FooterLink";
+import FooterPolicyAndTerms from "../../components/Footer/FooterPolicyAndTerms/FooterPolicyAndTerms";
+import FooterCategory from "../../components/Footer/FooterCategory/FooterCategory";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -196,6 +200,10 @@ export default function Home() {
           <Typography>Loading ...</Typography>
         </Box>
       )}
+      <FooterText></FooterText>
+      <FooterCategory></FooterCategory>
+      <FooterLink></FooterLink>
+      <FooterPolicyAndTerms></FooterPolicyAndTerms>
     </>
   );
 }

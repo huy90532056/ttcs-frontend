@@ -85,3 +85,20 @@
     padding: 2px 8px;
     border-bottom-left-radius: 8px;
   }
+  .outstanding-product img {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.outstanding-product:hover img {
+    transform: scale(1.07);
+    box-shadow: 0 4px 16px #0001;
+}
+
+.outstanding-product {
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.outstanding-product:hover {
+    box-shadow: 0 4px 24px #0002;
+    transform: translateY(-4px) scale(1.02);
+}

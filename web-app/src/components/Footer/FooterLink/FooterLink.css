@@ -3,10 +3,10 @@
     color: #888;
     font-size: 14px;
     border-top: 1px solid #eee;
-    width: 100%;
-    padding: 4.8rem 3.2rem 0;
-  }
-  
+    width: 99vw; /* Sửa lại từ 100% thành 97vw */
+    margin: 0 auto; /* Căn giữa */
+    padding: 4.8rem 0 0; /* Bỏ padding trái/phải */
+}
   .footer-link__top {
     display: flex;
     flex-wrap: wrap;

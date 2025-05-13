@@ -1,0 +1,72 @@
+.flash-sale-products {
+  display: flex;
+  gap: 16px;
+  margin: 0 0 16px 0;
+  padding: 0 24px;
+  overflow-x: auto;
+  justify-content: flex-start;
+}
+
+.flash-sale-product-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.flash-sale-product-card {
+  background: #fff;
+  border-radius: 12px;
+  width: 200px;
+  padding: 16px 8px 12px 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px #0001;
+  border: 1px solid #f5f5f5;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+.flash-sale-product-card:hover {
+  box-shadow: 0 4px 16px #ee4d2d33;
+  transform: translateY(-4px) scale(1.03);
+}
+
+.flash-sale-product-price {
+  color: #ee4d2d;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+  display: inline-block;
+  transition: color 0.2s;
+}
+.flash-sale-product-card:hover .flash-sale-product-price {
+  color: #d73211;
+}
+
+.flash-sale-product-img {
+  width: 100%;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.flash-sale-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 24px 0 0 0;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px #0001;
+}
+
+.flash-sale-products {
+  display: flex;
+  gap: 16px;
+  margin: 0 0 16px 0;
+  padding: 0 0;
+  overflow-x: auto;
+  justify-content: flex-start;
+}
