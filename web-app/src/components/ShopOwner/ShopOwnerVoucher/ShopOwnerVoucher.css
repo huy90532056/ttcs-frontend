@@ -1,0 +1,121 @@
+.shop-voucher-container {
+  background: #fff;
+  border-radius: 6px;
+  padding: 24px;
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto;    
+}
+
+.shop-voucher-list {
+  display: flex;
+  gap: 18px;
+  max-width: 1050px;
+  margin: 0 auto;    
+}
+
+.shop-voucher-title {
+  color: #b0b0b0;
+  font-size: 18px;
+  margin-bottom: 18px;
+  font-weight: 500; 
+}
+.shop-voucher-card {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  background: #fff6f5;
+  border: 1px dashed #ee4d2d;
+  border-radius: 6px;
+  min-width: 280px;
+  min-height: 110px;
+  box-shadow: 2px 4px 0 #fff;
+  overflow: hidden;
+  position: relative;
+}
+
+.shop-voucher-info {
+  flex: 1;
+  padding: 16px 0 16px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.shop-voucher-value {
+  color: #ee4d2d;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.shop-voucher-condition {
+  color: #ee4d2d;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.shop-voucher-progress {
+  background: #f5c6c6;
+  height: 4px;
+  border-radius: 2px;
+  margin-bottom: 6px;
+  width: 90%;
+  position: relative;
+}
+
+.shop-voucher-progress-bar {
+  background: #ee4d2d;
+  height: 100%;
+  border-radius: 2px;
+}
+
+.shop-voucher-status {
+  color: #ee4d2d;
+  font-size: 13px;
+}
+
+.shop-voucher-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 1px dashed #ee4d2d;
+  background: #fff;
+  min-width: 110px;
+  padding: 16px 0 16px 0;
+  position: relative;
+}
+
+.shop-voucher-quantity {
+  color: #ee4d2d;
+  font-size: 15px;
+  margin-bottom: 12px;
+  background: #ffeaea;
+  border-radius: 12px;
+  padding: 2px 12px;
+  position: absolute;
+  top: 8px;
+  right: 12px;
+}
+
+.shop-voucher-btn {
+  background: #ee4d2d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 22px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.shop-voucher-btn.claimed,
+.shop-voucher-btn:disabled {
+  background: #fff;
+  color: #ee4d2d;
+  border: 1px solid #ee4d2d;
+  cursor: pointer;
+}

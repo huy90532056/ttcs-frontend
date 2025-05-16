@@ -252,3 +252,21 @@
     font-size: 20px;
     color: #888;
   }
+
+  .productpage-extra-info {
+  margin: 18px 0 18px 0;
+}
+.productpage-extra-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.productpage-extra-label {
+  min-width: 180px;
+  color: #888;
+  display: flex;
+  align-items: center;
+}
+.productpage-extra-value {
+  font-weight: 400;
+}

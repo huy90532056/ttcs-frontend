@@ -1,0 +1,148 @@
+.productshop-container {
+  display: flex;
+  background: #fff;
+  border-radius: 8px;
+  padding: 32px 36px 24px 36px;
+  margin: 32px auto 0 auto;
+  max-width: 1200px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  align-items: center;
+  gap: 36px;
+}
+
+.productshop-left {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  min-width: 320px;
+  margin-right: 36px;
+  gap: 16px;
+}
+
+.productshop-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #eee;
+  margin-bottom: 0;
+}
+
+.productshop-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.productshop-name {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.productshop-online {
+  color: #20c997;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.productshop-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-bottom: 0;
+  width: auto;
+  margin-top: 6px;
+}
+
+.productshop-chat {
+  background: #fff;
+  color: #ee4d2d;
+  border: 1.5px solid #ee4d2d;
+  border-radius: 4px;
+  padding: 6px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.productshop-view {
+  background: #fff;
+  color: #333;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.productshop-fav {
+  background: #ee4d2d;
+  color: #fff;
+  font-size: 13px;
+  border-radius: 3px;
+  padding: 2px 14px;
+  margin-top: 8px;
+  font-weight: 500;
+  width: fit-content;
+}
+
+.productshop-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.productshop-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;
+  align-items: center;
+  font-size: 15px;
+  margin-bottom: 8px;
+  gap: 0;
+}
+
+.productshop-label {
+  color: #888;
+  font-weight: 400;
+  text-align: left;
+  min-width: unset;
+  margin-right: 0;
+}
+
+.productshop-value {
+  color: #ee4d2d;
+  font-weight: 600;
+  text-align: left;
+  min-width: unset;
+  margin-right: 0;
+}
+
+.productshop-chat:hover {
+  background: #fff5f0;
+  color: #fff;
+  background-color: #ee4d2d;
+  border-color: #ee4d2d;
+  transition: all 0.2s;
+}
+
+.productshop-view:hover {
+  background: #f5f5f5;
+  color: #ee4d2d;
+  border-color: #ee4d2d;
+  transition: all 0.2s;
+}
+.productshop-actions a {
+  text-decoration: none;
+}

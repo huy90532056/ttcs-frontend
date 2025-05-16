@@ -4,7 +4,6 @@ import { setToken } from "../../services/localStorageService";
 import { useNavigate, Link } from "react-router-dom";
 import authorizedAxiosInstance from "../../utils/authorizedAxios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import backgroundImg from "../../assets/images/register-page/background.png";
 import shopeeLogiImg from "../../assets/images/header/header__cart/Shopee.svg.webp";
 import shopeeBackgroundIMG from "../../assets/images/header/header__cart/image.png";
 

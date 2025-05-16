@@ -6,6 +6,7 @@ import SearchingTrend from "./SearchingTrend/SearchingTrend";
 import ShopeeMall from "./ShopeeMall/ShopeeMall";
 import Slider from "./Slider/Slider";
 import TodaySuggestion from "./TodaySuggestion/TodaySuggestion";
+import TopSearch from "./TopSearch/TopSearch";
 
 
 function Container() {
@@ -18,6 +19,7 @@ function Container() {
             <FlashSale></FlashSale>
             <ShopeeMall></ShopeeMall>
             <SearchingTrend></SearchingTrend>
+            <TopSearch></TopSearch>
             <TodaySuggestion></TodaySuggestion>
         </div>
     );

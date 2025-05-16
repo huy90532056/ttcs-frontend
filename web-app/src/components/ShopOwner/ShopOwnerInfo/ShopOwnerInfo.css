@@ -1,0 +1,87 @@
+.shopowner-info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #181818;
+  color: #fff;
+  border-radius: 8px;
+  padding: 24px 32px;
+  margin: 32px auto 0 auto;
+  max-width: 1200px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.shopowner-info-left {
+  display: flex;
+  align-items: center;
+}
+
+.shopowner-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  background: #fff;
+}
+
+.shopowner-info-main {
+  margin-left: 24px;
+}
+
+.shopowner-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.shopowner-online {
+  color: #00e676;
+  margin: 4px 0 12px 0;
+  font-size: 1rem;
+}
+
+.shopowner-actions button {
+  margin-right: 10px;
+  padding: 6px 18px;
+  border-radius: 4px;
+  border: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.shopowner-actions .shopowner-fav {
+  background: #ee4d2d;
+  border: none;
+  color: #fff;
+}
+.shopowner-actions .shopowner-follow {
+  background: #fff;
+  color: #181818;
+  border: none;
+}
+.shopowner-actions .shopowner-chat {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.shopowner-info-right {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 1rem;
+  min-width: 320px;
+}
+
+.shopowner-label {
+  color: #fff;
+  font-weight: 400;
+}
+.shopowner-value {
+  color: #ee4d2d;
+  font-weight: 600;
+}
+

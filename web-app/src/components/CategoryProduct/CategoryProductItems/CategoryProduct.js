@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   fetchProductsByCategory,
   fetchCategories,
-  fetchProductsSortedByPrice,
+  fetchProductsByCategoryAndSort,
   fetchProductsByTag
 } from "../../../apis";
 import "./CategoryProduct.css";
@@ -42,7 +42,14 @@ const CategoryProductItems = () => {
       if (selectedTag) {
         res = await fetchProductsByTag(selectedTag);
       } else if (sort === "price") {
-        res = await fetchProductsSortedByPrice(1, 20, priceOrder);
+        // Sử dụng API mới, truyền categoryId từ URL
+        const apiRes = await fetchProductsByCategoryAndSort({
+          pageNo: 1,
+          pageSize: 20,
+          sortDir: priceOrder,
+          categoryId
+        });
+        res = apiRes?.items || [];
       } else {
         res = await fetchProductsByCategory(categoryId);
       }
@@ -139,11 +146,6 @@ const CategoryProductItems = () => {
               <label htmlFor={`tag-${tag.tagId}`}>{tag.tagName}</label>
             </div>
           ))}
-        </div>
-        <div className="catprod-filter-group">
-          <div className="catprod-filter-label">Nơi Bán</div>
-          <div><input type="checkbox" /> Hà Nội</div>
-          <div><input type="checkbox" /> TP. Hồ Chí Minh</div>
         </div>
       </aside>
 

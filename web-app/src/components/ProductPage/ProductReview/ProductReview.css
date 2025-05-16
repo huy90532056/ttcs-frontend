@@ -1,0 +1,170 @@
+.review-container {
+  background: #fff;
+  border-radius: 8px;
+  padding: 32px 36px 24px 36px;
+  margin: 32px auto 0 auto;
+  max-width: 1200px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.review-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* Khung cam nhạt cho phần summary và filter */
+.review-summary {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  background: #fff8f5;
+  border: 1px solid #ffe1d2;
+  border-radius: 4px;
+  padding: 28px 24px 20px 24px;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.review-average {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.review-average-score {
+  font-size: 36px;
+  color: #ee4d2d;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.review-average-max {
+  color: #888;
+  font-size: 16px;
+  margin-left: 4px;
+}
+
+.review-stars {
+  margin: 8px 0;
+}
+
+.star {
+  color: #ddd;
+  font-size: 22px;
+  margin-right: 2px;
+}
+
+.star.filled {
+  color: #ee4d2d;
+}
+
+.review-count {
+  color: #888;
+  font-size: 15px;
+}
+
+.review-list {
+  margin-top: 16px;
+}
+
+.review-item {
+  border-top: 1px solid #f0f0f0;
+  padding: 18px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.review-user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.review-avatar {
+  width: 36px;
+  height: 36px;
+  background: #eee;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #888;
+  margin-right: 12px;
+  font-size: 16px;
+}
+
+.review-username {
+  font-weight: 600;
+  font-size: 15px;
+  color: #333;
+}
+
+.review-rating {
+  margin-top: 2px;
+}
+
+.review-comment {
+  font-size: 15px;
+  color: #222;
+  margin-left: 48px;
+}
+
+/* Filter style giống Shopee */
+.review-filter {
+  display: flex;
+  gap: 10px;
+  margin-left: 40px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: #fff;
+  border: 1px solid #ee4d2d;
+  color: #ee4d2d;
+  border-radius: 4px;
+  padding: 8px 22px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: #ee4d2d;
+  color: #fff;
+  border-color: #ee4d2d;
+}
+
+/* Các nút filter phụ */
+.review-filter .filter-btn:not(:first-child) {
+  background: #fff;
+  color: #222;
+  border: 1px solid #ddd;
+}
+
+.review-filter .filter-btn.active:not(:first-child),
+.review-filter .filter-btn:not(:first-child):hover {
+  background: #fff;
+  color: #ee4d2d;
+  border: 1px solid #ee4d2d;
+}
+
+.review-filter .filter-btn {
+  border: 1px solid #ddd;
+  color: #222;
+  background: #fff;
+}
+
+.review-filter .filter-btn.active {
+  background: #ee4d2d;
+  color: #fff;
+  border: 1.5px solid #ee4d2d;
+}
+
+.review-filter .filter-btn:hover {
+  border: 1.5px solid #ee4d2d;
+  color: #ee4d2d;
+}

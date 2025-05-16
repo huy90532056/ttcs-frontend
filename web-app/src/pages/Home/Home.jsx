@@ -11,6 +11,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { createCart } from "../../apis"; 
 import authorizedAxiosInstance from "../../utils/authorizedAxios";
 import NewHeader from "../../components/header";
 import Container from "../../components/Container/Container";
@@ -26,6 +27,8 @@ export default function Home() {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [snackType, setSnackType] = useState("error");
+  const [checkingAuth, setCheckingAuth] = useState(true); // Thêm state này
+
 
   const handleCloseSnackBar = (event, reason) => {
     if (reason === "clickaway") {
@@ -52,9 +55,17 @@ export default function Home() {
       const response = await authorizedAxiosInstance.get(
         "http://localhost:8080/ecommerce/users/myInfo"
       );
+
+      const user = response.data.result;
+      setUserDetails(user);
   
-      console.log(response.data.result);
-      setUserDetails(response.data.result);
+      console.log(user);
+      setUserDetails(user);
+
+      if (user && user.id) {
+      await createCart(user.id);
+    }
+
     } catch (error) {
       console.error("Failed to fetch user details:", error);
     }
@@ -86,124 +97,104 @@ export default function Home() {
 
   useEffect(() => {
     const accessToken = getToken();
-
     if (!accessToken) {
       navigate("/login");
+    } else {
+      getUserDetails(accessToken);
     }
-
-    getUserDetails(accessToken);
+    setCheckingAuth(false); 
   }, [navigate]);
 
+  if (checkingAuth) {
+    return null;
+  }
+
   return (
-    <>
-      <NewHeader></NewHeader>
-      <Container></Container>
-      <Snackbar
-        open={snackBarOpen}
-        onClose={handleCloseSnackBar}
-        autoHideDuration={6000}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+  <>
+    <NewHeader />
+    {userDetails.noPassword ? (
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        height="100vh"
+        bgcolor={"#f0f2f5"}
       >
-        <Alert
-          onClose={handleCloseSnackBar}
-          severity={snackType}
-          variant="filled"
-          sx={{ width: "100%" }}
+        <Card
+          sx={{
+            minWidth: 400,
+            maxWidth: 500,
+            boxShadow: 4,
+            borderRadius: 2,
+            padding: 4,
+          }}
         >
-          {snackBarMessage}
-        </Alert>
-      </Snackbar>
-      {userDetails ? (
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          height="100vh"
-          bgcolor={"#f0f2f5"}
-        >
-          <Card
+          <Box
             sx={{
-              minWidth: 400,
-              maxWidth: 500,
-              boxShadow: 4,
-              borderRadius: 2,
-              padding: 4,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "100%",
             }}
           >
+            <Typography>Do you want to create password?</Typography>
             <Box
+              component="form"
+              onSubmit={addPassword}
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
-                width: "100%", // Ensure content takes full width
+                gap: "10px",
+                width: "100%",
               }}
             >
-              <p>Welcome back to Devteria, {userDetails.username}</p>
-              <h1 className="name">{`${userDetails.firstName} ${userDetails.lastName}`}</h1>
-              <p className="email">{userDetails.dob}</p>
-              <ul>
-                User's roles:
-                {userDetails.roles?.map((item, index) => (
-                  <li className="email" key={index}>
-                    {item.name}
-                  </li>
-                ))}
-              </ul>
-              {userDetails.noPassword && (
-                <Box
-                  component="form"
-                  onSubmit={addPassword}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                    width: "100%",
-                  }}
-                >
-                  <Typography>Do you want to create password?</Typography>
-                  <TextField
-                    label="Password"
-                    type="password"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    fullWidth
-                  >
-                    Create password
-                  </Button>
-                </Box>
-              )}
+              <TextField
+                label="Password"
+                type="password"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                size="large"
+                fullWidth
+              >
+                Create password
+              </Button>
             </Box>
-          </Card>
-        </Box>
-      ) : (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "30px",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <CircularProgress></CircularProgress>
-          <Typography>Loading ...</Typography>
-        </Box>
-      )}
-      <FooterText></FooterText>
-      <FooterCategory></FooterCategory>
-      <FooterLink></FooterLink>
-      <FooterPolicyAndTerms></FooterPolicyAndTerms>
-    </>
-  );
+          </Box>
+        </Card>
+      </Box>
+    ) : (
+      <>
+        <Container />
+        <FooterText />
+        <FooterCategory />
+        <FooterLink />
+        <FooterPolicyAndTerms />
+      </>
+    )}
+    <Snackbar
+      open={snackBarOpen}
+      onClose={handleCloseSnackBar}
+      autoHideDuration={6000}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+    >
+      <Alert
+        onClose={handleCloseSnackBar}
+        severity={snackType}
+        variant="filled"
+        sx={{ width: "100%" }}
+      >
+        {snackBarMessage}
+      </Alert>
+    </Snackbar>
+  </>
+);
 }

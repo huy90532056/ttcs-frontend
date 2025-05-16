@@ -3,6 +3,7 @@ import { fetchAllInventories } from "../../../apis";
 import "./ShopeeMall.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { FaStore } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const SHOPEEMALL_BANNERS = [
   "https://blasterdpm.s3.ap-southeast-1.amazonaws.com/07777d1d-5bda-4112-9c88-587db9209e14.png",
@@ -32,6 +33,15 @@ const ShopeeMall = () => {
   useEffect(() => {
     fetchAllInventories().then(setInventories);
   }, []);
+
+  useEffect(() => {
+  const timer = setInterval(() => {
+    setCurrentBanner((prev) =>
+      prev === SHOPEEMALL_BANNERS.length - 1 ? 0 : prev + 1
+    );
+  }, 5000); // đổi banner mỗi 4 giây, có thể chỉnh lại số ms
+  return () => clearInterval(timer);
+  },[]);
 
   // Banner slider handlers
   const handlePrevBanner = () => {
@@ -100,7 +110,12 @@ const ShopeeMall = () => {
           </button>
           <div className="shopeemall-grid">
   {inventoryToShow.map((item, idx) => (
-    <div className="shopeemall-item" key={item.inventoryId}>
+    <Link
+      to={`/myshop/${item.inventoryId}`}
+      className="shopeemall-item"
+      key={item.inventoryId}
+      style={{ textDecoration: "none", color: "inherit" }}
+    >
       <div className="shopeemall-item-img-wrapper">
         <img
           src={item.inventoryImagePath}
@@ -111,7 +126,7 @@ const ShopeeMall = () => {
       <div className="shopeemall-item-label">
         {SHOPEEMALL_LABELS[idx % SHOPEEMALL_LABELS.length] || "Ưu đãi"}
       </div>
-    </div>
+    </Link>
   ))}
 </div>
           <button className="shopeemall-inv-arrow right" onClick={handleNextInventory}>

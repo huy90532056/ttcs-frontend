@@ -6,75 +6,111 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     overflow: hidden;
 }
-  
-  .outstanding-header img,
-  .outstanding-footer img {
+
+.outstanding-header img,
+.outstanding-footer img {
     width: 100%;
     display: block;
-  }
-  
-  .outstanding-body {
+}
+
+.outstanding-body {
     background: #fff6ee;
     padding: 24px 0 0 0;
-  }
-  
-  .outstanding-body-top {
+}
+
+.outstanding-body-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 40px 16px 40px;
-  }
-  
-  .outstanding-title {
+}
+
+.outstanding-title {
     font-size: 20px;
     color: #ee4d2d;
     font-weight: 500;
-  }
-  
-  .outstanding-title--brand {
+}
+
+.outstanding-title--brand {
     color: #ee4d2d;
-  }
-  
-  .outstanding-products {
+}
+
+.outstanding-products {
     display: flex;
     justify-content: space-between;
-    gap: 0;
-    padding: 0 0 24px 0;
-  }
-  
-  .outstanding-product {
-    background: #fff;
-    flex: 1;
-    margin: 0 0.5px;
+    align-items: stretch;
+    gap: 24px;
+    padding: 0 24px 24px 24px;
+}
+
+.outstanding-product-link,
+.outstanding-brand-link {
+    flex: 1 1 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 16px 0 8px 0;
+    min-width: 0;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+}
+
+.outstanding-product,
+.outstanding-brand {
+    background: #fff;
+    flex: 1 1 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 8px 8px 8px;
     position: relative;
     min-width: 0;
-  }
-  
-  .outstanding-product img {
+    box-sizing: border-box;
+    border: none;
+    border-radius: 8px;
+    height: 100%;
+    min-height: 260px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    justify-content: flex-start;
+}
+
+.outstanding-product img,
+.outstanding-brand-img,
+.outstanding-brand-logo {
     width: 120px;
     height: 120px;
     object-fit: contain;
     margin-bottom: 8px;
-  }
-  
-  .outstanding-product-name {
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+.outstanding-product-name,
+.outstanding-brand-discount {
     font-size: 15px;
     color: #333;
     margin-bottom: 4px;
     text-align: center;
-  }
-  
-  .outstanding-product-price {
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.outstanding-product-price {
     color: #ee4d2d;
     font-size: 16px;
     font-weight: 500;
-  }
-  
-  .outstanding-discount {
+    text-align: center;
+}
+
+.outstanding-discount {
     position: absolute;
     top: 0;
     right: 0;
@@ -84,21 +120,63 @@
     font-weight: bold;
     padding: 2px 8px;
     border-bottom-left-radius: 8px;
-  }
-  .outstanding-product img {
-    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.outstanding-product:hover img {
+.outstanding-product:hover img,
+.outstanding-brand:hover .outstanding-brand-img,
+.outstanding-brand-link:hover .outstanding-brand-img {
     transform: scale(1.07);
     box-shadow: 0 4px 16px #0001;
 }
 
-.outstanding-product {
-    transition: box-shadow 0.2s, transform 0.2s;
-}
-
-.outstanding-product:hover {
+.outstanding-product:hover,
+.outstanding-brand:hover,
+.outstanding-brand-link:hover .outstanding-brand {
     box-shadow: 0 4px 24px #0002;
     transform: translateY(-4px) scale(1.02);
+}
+
+.outstanding-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: #fff;
+    min-width: 0;
+    margin: 0;
+    padding: 16px 8px 8px 8px;
+    position: relative;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 8px;
+    height: 100%;
+    min-height: 260px;
+}
+
+.outstanding-brand-discount {
+    color: #ee4d2d;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 8px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.outstanding-brand-img {
+    width: 172px;
+    height: 100%;
+    object-fit: contain;
+    margin-bottom: 16px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.outstanding-brand-img-wrap {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
 }

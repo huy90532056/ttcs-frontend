@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Banner.css";
 
 const banners = [
@@ -8,6 +8,13 @@ const banners = [
 
 const Banner = () => {
   const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
+    }, 5000); // 3 giây
+    return () => clearInterval(timer);
+  }, []);
 
   const prev = () => setCurrent((prev) => (prev === 0 ? banners.length - 1 : prev - 1));
   const next = () => setCurrent((prev) => (prev === banners.length - 1 ? 0 : prev + 1));

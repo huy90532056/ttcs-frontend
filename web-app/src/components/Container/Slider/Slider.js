@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SliderFavouriteSelectionsIcon1,
   SliderFavouriteSelectionsIcon2,
@@ -55,6 +55,13 @@ const favouriteIcons = [
 
 const Slider = () => {
   const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % bannerImages.length);
+    }, 3000); 
+    return () => clearInterval(timer);
+  }, []);
 
   const nextSlide = () => {
     setCurrent((prev) => (prev + 1) % bannerImages.length);

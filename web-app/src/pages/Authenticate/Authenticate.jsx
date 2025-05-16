@@ -24,7 +24,6 @@ export default function Authenticate() {
           const data = response.data;
     
           console.log(data);
-    
           setToken(data.result?.token);
           setIsLoggedin(true);
         })
