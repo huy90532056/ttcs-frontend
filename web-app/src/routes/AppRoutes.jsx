@@ -9,6 +9,10 @@ import SearchProductPage from "../pages/SearchProductPage/SearchProductPage";
 import ShopOwnerPage from "../pages/ShopOwnerPage/ShopOwnerPage";
 import CartPage from "../pages/CartPage/CartPage";
 import PurchasePage from "../pages/PurchasePage/PurchasePage";
+import UserPage from "../pages/UserPage/UserPage";
+import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
+import ShopDashboard from "../pages/ShopDashboard/ShopDashboard";
+import ShipperDashboard from "../pages/ShipperDashboard/ShipperDashboard";
 
 const AppRoutes = () => {
   return (
@@ -24,6 +28,10 @@ const AppRoutes = () => {
         <Route path="/myshop/:inventoryId" element={<ShopOwnerPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/purchase" element={<PurchasePage />} /> 
+        <Route path="/profile" element={<UserPage/>} />
+        <Route path="/admin" element={<AdminDashboard/>} />
+        <Route path="/shop" element={<ShopDashboard/>} />
+        <Route path="/shipper" element={<ShipperDashboard/>} />
       </Routes>
     </Router>
   );

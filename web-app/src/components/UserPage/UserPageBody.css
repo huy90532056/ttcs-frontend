@@ -1,0 +1,682 @@
+.userpage-body-container {
+  display: flex;
+  background: #f5f5f5;
+  padding: 40px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 32px;
+}
+
+.userpage-sidebar {
+  width: 260px;
+  background: #fff;
+  border-radius: 8px;
+  min-height: 600px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.userpage-main-content {
+  flex: 1;
+  background: #fff;
+  border-radius: 8px;
+  min-height: 600px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.userpage-profile {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.userpage-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.userpage-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.userpage-username {
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.userpage-edit-profile {
+  color: #888;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.userpage-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  color: #222;
+  font-weight: 400;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  border-left: 3px solid transparent;
+  transition: background 0.2s, color 0.2s;
+}
+
+.userpage-menu-item.selected {
+  color: #ee4d2d;
+  font-weight: 600;
+  background: #fff7f7;
+  border-left: 3px solid #ee4d2d;
+}
+
+.userpage-menu-item.sub {
+  padding: 6px 32px;
+  font-size: 15px;
+}
+
+.userpage-menu-icon {
+  display: flex;
+  align-items: center;
+}
+
+.userpage-empty-state {
+  text-align: center;
+  color: #888;
+  font-size: 18px;
+}
+
+.userpage-empty-state img {
+  width: 80px;
+  margin-bottom: 16px;
+}
+
+.userpage-notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px 0;
+}
+
+.userpage-notification-card {
+  display: flex;
+  align-items: flex-start;
+  background: #fff7f1;
+  border: 1px solid #ffe0d1;
+  border-radius: 10px;
+  padding: 18px 24px;
+  min-height: 80px;
+  box-shadow: 0 1px 4px rgba(238,77,45,0.04);
+  width: 95%;
+  margin: 0 auto;
+  position: relative;
+  min-width: 800px;
+}
+
+.userpage-notification-avatar {
+  flex: 0 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 18px;
+  color: #ee4d2d;
+}
+
+.userpage-notification-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.userpage-notification-message {
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 2px;
+}
+
+.userpage-notification-detail {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 2px;
+}
+
+.userpage-notification-time {
+  font-size: 13px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.userpage-notification-action {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  margin-left: 18px;
+}
+
+.userpage-notification-detail-btn {
+  background: #fff;
+  border: 1px solid #ee4d2d;
+  color: #ee4d2d;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.userpage-notification-detail-btn:hover {
+  background: #ffe0d1;
+  color: #d4380d;
+}
+
+.userpage-notification-more-btn {
+  margin: 24px auto 0;
+  display: block;
+  background: #fff7f1;
+  border: 1px solid #ffe0d1;
+  border-radius: 6px;
+  padding: 8px 24px;
+  color: #ee4d2d;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.userpage-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 0;
+}
+
+.userpage-order-card {
+  background: #fff;
+  border: 1px solid #e3e8ee;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(22,119,255,0.04);
+  padding: 24px 32px;
+  width: 95%;
+  margin: 0 auto;
+  transition: box-shadow 0.2s;
+  min-width: 800px;
+}
+
+.userpage-order-card:hover {
+  box-shadow: 0 4px 16px rgba(22,119,255,0.10);
+}
+
+.userpage-order-header {
+  display: flex;
+  gap: 32px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.userpage-order-header span {
+  margin-right: 18px;
+}
+
+.userpage-order-body {
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.userpage-order-body > div {
+  margin-bottom: 4px;
+}
+
+.userpage-order-items {
+  margin-top: 8px;
+}
+
+.userpage-order-items b {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.userpage-order-items ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.userpage-order-items li {
+  background: #f7fafd;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #444;
+  list-style: disc inside;
+  border: 1px solid #e3e8ee;
+}
+
+.userpage-order-items ul {
+  margin: 0;
+  padding-left: 0;
+}
+.userpage-order-items li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+/* Hồ sơ cá nhân */
+.userpage-profile-main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.userpage-profile-form {
+  background: #fff;
+  border-radius: 8px;
+  padding: 32px 32px 24px 32px;
+  width: 700px;
+  margin: 24px auto;
+  box-shadow: 0 2px 8px rgba(22,119,255,0.04);
+}
+.userpage-profile-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.userpage-profile-desc {
+  color: #888;
+  margin-bottom: 18px;
+}
+.userpage-profile-content {
+  display: flex;
+  gap: 32px;
+  margin-top: 16px;
+}
+.userpage-profile-left {
+  flex: 1;
+}
+.userpage-profile-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.userpage-profile-row label {
+  width: 130px;
+  color: #555;
+  font-size: 15px;
+}
+.userpage-profile-row input[type="text"], 
+.userpage-profile-row input[type="email"] {
+  border: 1px solid #e3e8ee;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 15px;
+  width: 240px;
+}
+.userpage-profile-row span {
+  font-size: 15px;
+}
+.userpage-profile-row a {
+  color: #1677ff;
+  margin-left: 8px;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.userpage-profile-save-btn {
+  margin-top: 12px;
+  background: #ee4d2d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.userpage-profile-right {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.userpage-profile-avatar-big {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.userpage-profile-avatar-btn {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 18px;
+  font-size: 15px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.userpage-profile-avatar-note {
+  color: #888;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Đơn hàng */
+.userpage-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 0;
+}
+.userpage-order-card {
+  background: #fff;
+  border: 1px solid #e3e8ee;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(22,119,255,0.04);
+  padding: 24px 32px;
+  width: 95%;
+  margin: 0 auto;
+  transition: box-shadow 0.2s;
+  min-width: 800px;
+}
+.userpage-order-card:hover {
+  box-shadow: 0 4px 16px rgba(22,119,255,0.10);
+}
+.userpage-order-header {
+  display: flex;
+  gap: 32px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #222;
+}
+.userpage-order-header span {
+  margin-right: 18px;
+}
+.userpage-order-body {
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 8px;
+}
+.userpage-order-body > div {
+  margin-bottom: 4px;
+}
+.userpage-order-items {
+  margin-top: 8px;
+}
+.userpage-order-items b {
+  display: block;
+  margin-bottom: 6px;
+}
+.userpage-order-items ul {
+  margin: 0;
+  padding-left: 0;
+}
+.userpage-order-items li {
+  list-style: none;
+  background: #f7fafd;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #444;
+  border: 1px solid #e3e8ee;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Notification */
+.userpage-notification-list {
+  padding: 24px 0;
+}
+.userpage-notification-card {
+  display: flex;
+  align-items: flex-start;
+  background: #fff7f1;
+  border: 1px solid #ffe0d1;
+  border-radius: 8px;
+  padding: 18px 24px;
+  margin-bottom: 18px;
+  gap: 18px;
+}
+.userpage-notification-avatar {
+  margin-right: 12px;
+  margin-top: 2px;
+}
+.userpage-notification-content {
+  flex: 1;
+}
+.userpage-notification-message {
+  font-weight: 600;
+  color: #ee4d2d;
+  margin-bottom: 4px;
+}
+.userpage-notification-detail {
+  color: #333;
+  margin-bottom: 4px;
+}
+.userpage-notification-time {
+  color: #888;
+  font-size: 13px;
+}
+.userpage-notification-action {
+  margin-left: 18px;
+}
+.userpage-notification-detail-btn {
+  padding: 6px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid #ee4d2d;
+  border-radius: 6px;
+  color: #ee4d2d;
+  transition: background 0.15s, color 0.15s;
+}
+.userpage-notification-detail-btn:hover {
+  background: #ffe0d1;
+  color: #d4380d;
+}
+.userpage-notification-more-btn {
+  margin: 24px auto 0;
+  display: block;
+  background: #fff7f1;
+  border: 1px solid #ffe0d1;
+  border-radius: 6px;
+  padding: 8px 24px;
+  color: #ee4d2d;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Empty state */
+.userpage-empty-state {
+  text-align: center;
+  color: #888;
+  margin-top: 48px;
+}
+
+.userpage-profile-main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.userpage-profile-form {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 40px 32px 40px;
+  width: 750px;
+  margin: 32px auto;
+  box-shadow: 0 2px 16px rgba(22,119,255,0.06);
+}
+
+.userpage-profile-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #222;
+}
+
+.userpage-profile-desc {
+  color: #888;
+  margin-bottom: 24px;
+  font-size: 15px;
+}
+
+.userpage-profile-content {
+  display: flex;
+  gap: 40px;
+  margin-top: 16px;
+}
+
+.userpage-profile-left {
+  flex: 1;
+}
+
+.userpage-profile-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 22px;
+  font-size: 16px;
+}
+
+.userpage-profile-row label {
+  width: 140px;
+  color: #555;
+  font-size: 15px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.userpage-profile-row span {
+  font-size: 16px;
+  color: #222;
+  word-break: break-all;
+}
+
+.userpage-profile-right {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.userpage-profile-avatar-big {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+  border: 1.5px solid #e3e8ee;
+  box-shadow: 0 2px 8px rgba(22,119,255,0.04);
+}
+
+/* Voucher List Container */
+.userpage-voucher-list {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 8px;
+}
+
+/* Voucher Card */
+.userpage-voucher-card {
+  display: flex;
+  align-items: stretch;
+  border: 1.5px dashed #ee4d2d;
+  border-radius: 12px;
+  background: #fff7f1;
+  margin-bottom: 22px;
+  min-height: 110px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px 0 rgba(238,77,45,0.06);
+  transition: box-shadow 0.2s;
+}
+
+.userpage-voucher-card:hover {
+  box-shadow: 0 4px 16px 0 rgba(238,77,45,0.13);
+}
+
+/* Voucher Left */
+.userpage-voucher-card > div:first-child {
+  flex: 1;
+  padding: 22px 24px 22px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #fff7f1;
+}
+
+/* Voucher Title */
+.userpage-voucher-card .voucher-title {
+  font-weight: 700;
+  color: #ee4d2d;
+  font-size: 22px;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+/* Voucher Min Order */
+.userpage-voucher-card .voucher-minorder {
+  color: #222;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+/* Voucher Expiry */
+.userpage-voucher-card .voucher-expiry {
+  color: #ee4d2d;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+/* Voucher Code Box */
+.userpage-voucher-card > div:last-child {
+  width: 200px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1.5px dashed #ee4d2d;
+}
+
+.userpage-voucher-card .voucher-code {
+  background: #ee4d2d;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 8px;
+  padding: 14px 28px;
+  letter-spacing: 1.2px;
+  box-shadow: 0 2px 8px 0 rgba(238,77,45,0.08);
+  transition: background 0.2s;
+  word-break: break-all;
+}
+
+.userpage-voucher-card .voucher-code:hover {
+  background: #ff5722;
+}
+

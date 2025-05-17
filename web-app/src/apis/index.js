@@ -286,3 +286,202 @@ export const applyUserDiscount = async (userDiscountId) => {
   );
   return response.data.result;
 };
+
+export const updateProductVariant = async (variantId, data) => {
+  const response = await authorizedAxiosInstance.put(
+    `${API_ROOT}/ecommerce/product-variants/${variantId}`,
+    data
+  );
+  return response.data.result;
+};
+
+export const clearCartById = async (cartId) => {
+  const response = await authorizedAxiosInstance.put(
+    `${API_ROOT}/ecommerce/carts/${cartId}/clear`
+  );
+  return response.data.result;
+};
+
+export const fetchNotificationsByUserId = async (userId) => {
+  const response = await authorizedAxiosInstance.get(
+    `${API_ROOT}/ecommerce/notifications/user/${userId}`
+  );
+  return response.data.result;
+};
+
+export const fetchOrderItemById = async (orderItemId) => {
+  const response = await authorizedAxiosInstance.get(
+    `${API_ROOT}/ecommerce/order-items/${orderItemId}`
+  );
+  return response.data.result;
+};
+
+export const updateUserById = async (userId, data) => {
+  const response = await authorizedAxiosInstance.put(
+    `${API_ROOT}/ecommerce/users/${userId}`,
+    data
+  );
+  return response.data.result;
+};
+
+export const fetchAllUsers = async () => {
+  const response = await authorizedAxiosInstance.get(
+    `${API_ROOT}/ecommerce/users`
+  );
+  return response.data.result;
+};
+
+export const deleteUserById = async (userId) => {
+  const response = await authorizedAxiosInstance.delete(
+    `${API_ROOT}/ecommerce/users/${userId}`
+  );
+  return response.data.result;
+};
+
+export const deleteProductVariantById = async (variantId) => {
+  const response = await authorizedAxiosInstance.delete(
+    `${API_ROOT}/ecommerce/product-variants/${variantId}`
+  );
+  return response.data.result;
+};
+
+export const deleteProductById = async (productId) => {
+  const response = await authorizedAxiosInstance.delete(
+    `${API_ROOT}/ecommerce/products/${productId}`
+  );
+  return response.data.result;
+};
+
+export const updateProductById = async (productId, data) => {
+  const response = await authorizedAxiosInstance.put(
+    `${API_ROOT}/ecommerce/products/${productId}`,
+    data
+  );
+  return response.data.result;
+};
+
+export const fetchAllOrders = async () => {
+  const response = await authorizedAxiosInstance.get(
+    `${API_ROOT}/ecommerce/orders`
+  );
+  return response.data.result;
+};
+
+export const updateOrderById = async (orderId, data) => {
+  const response = await authorizedAxiosInstance.put(
+    `${API_ROOT}/ecommerce/orders/${orderId}`,
+    data
+  );
+  return response.data.result;
+};
+
+export const deleteOrderById = async (orderId) => {
+  const response = await authorizedAxiosInstance.delete(
+    `${API_ROOT}/ecommerce/orders/${orderId}`
+  );
+  return response.data.result;
+};
+
+export const updateDiscountById = async (discountId, data) => {
+  const response = await authorizedAxiosInstance.put(
+    `${API_ROOT}/ecommerce/discounts/${discountId}`,
+    data
+  );
+  return response.data.result;
+};
+
+export const deleteDiscountById = async (discountId) => {
+  const response = await authorizedAxiosInstance.delete(
+    `${API_ROOT}/ecommerce/discounts/${discountId}`
+  );
+  return response.data.result;
+};
+
+export const fetchInventoryByUserId = async (userId) => {
+  const response = await authorizedAxiosInstance.get(
+    `${API_ROOT}/ecommerce/inventories/user/${userId}`
+  );
+  return response.data.result;
+};
+
+export const createProduct = async (formData) => {
+  const response = await authorizedAxiosInstance.post(
+    `${API_ROOT}/ecommerce/products`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    }
+  );
+  return response.data.result;
+};
+
+export const createProductVariant = async (formData) => {
+  const response = await authorizedAxiosInstance.post(
+    `${API_ROOT}/ecommerce/product-variants`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    }
+  );
+  return response.data.result;
+};
+
+export const addProductToInventory = async ({ productId, inventoryId, quantity = 999 }) => {
+  const response = await authorizedAxiosInstance.post(
+    `${API_ROOT}/ecommerce/product-inventories`,
+    { productId, inventoryId, quantity }
+  );
+  return response.data.result;
+};
+
+export const addCategoryToProduct = async (productId, categoryId) => {
+  const response = await authorizedAxiosInstance.put(
+    `${API_ROOT}/ecommerce/products/${productId}/categories/${categoryId}`
+  );
+  return response.data.result;
+};
+
+export const addTagToProduct = async (productId, tagId) => {
+  const response = await authorizedAxiosInstance.put(
+    `${API_ROOT}/ecommerce/products/${productId}/tags/${tagId}`
+  );
+  return response.data.result;
+};
+
+export const createCategory = async (formData) => {
+  const response = await authorizedAxiosInstance.post(
+    `${API_ROOT}/ecommerce/categories`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    }
+  );
+  return response.data.result;
+};
+
+export const deleteCategoryById = async (categoryId) => {
+  const response = await authorizedAxiosInstance.delete(
+    `${API_ROOT}/ecommerce/categories/${categoryId}`
+  );
+  return response.data.result;
+};
+
+export const createTag = async ({ tagName }) => {
+  const response = await authorizedAxiosInstance.post(
+    `${API_ROOT}/ecommerce/tags`,
+    { tagName }
+  );
+  return response.data.result;
+};
+export const deleteTagById = async (tagId) => {
+  const response = await authorizedAxiosInstance.delete(
+    `${API_ROOT}/ecommerce/tags/${tagId}`
+  );
+  return response.data.result;
+};

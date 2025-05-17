@@ -1,0 +1,163 @@
+.shipper-body-container {
+  display: flex;
+  min-height: 70vh;
+  background: #fafbfc;
+  padding: 32px 0;
+  justify-content: center;
+}
+
+.shipper-sidebar {
+  width: 220px;
+  background: #fff;
+  border-radius: 16px;
+  margin-right: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 24px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 400px;
+}
+
+.shipper-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.shipper-avatar {
+  margin-bottom: 8px;
+}
+
+.shipper-username {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.shipper-dashboard-title {
+  color: #1677ff;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.shipper-menu-item-btn {
+  display: flex;
+  align-items: center;
+  width: 180px;
+  background: none;
+  border: none;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 15px;
+  outline: none;
+  text-align: left;
+  border-radius: 6px;
+  transition: background 0.2s;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.shipper-menu-item-btn.selected,
+.shipper-menu-item-btn:hover {
+  background: #f1f8ff;
+  color: #1677ff;
+}
+
+.shipper-menu-icon {
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.shipper-main-content {
+  flex: 1;
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px 20px 20px 20px; /* giảm padding */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  max-width: 1200px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.shipper-main-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.shipper-accept-btn {
+  background: #1677ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+.shipper-accept-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Hiển thị bảng rõ ràng, đẹp */
+.shipper-orders-table,
+.shipper-orders-table th,
+.shipper-orders-table td {
+  border: 1px solid #e5e7eb;
+  border-collapse: collapse;
+}
+
+.shipper-orders-table {
+  width: 100%;
+  background: #fff;
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.shipper-orders-table th {
+  background: #f8fafd;
+  color: #1677ff;
+  font-weight: 600;
+  padding: 10px 14px;
+  text-align: center;
+}
+
+.shipper-orders-table td {
+  padding: 10px 14px;
+  text-align: center;
+}
+
+.shipper-orders-table tr:nth-child(even) {
+  background: #fafbfc;
+}
+
+.shipper-order-items-table,
+.shipper-order-items-table th,
+.shipper-order-items-table td {
+  border: 1px solid #e5e7eb;
+  border-collapse: collapse;
+}
+
+.shipper-order-items-table {
+  width: 100%;
+  background: #fff;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.shipper-order-items-table th {
+  background: #f3f6fa;
+  color: #1677ff;
+  font-weight: 500;
+  padding: 8px 10px;
+}
+
+.shipper-order-items-table td {
+  padding: 8px 10px;
+  text-align: center;
+}

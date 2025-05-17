@@ -266,6 +266,7 @@ const CartPageBody = () => {
                       e.currentTarget.blur();
                       await handleChangeQuantity(item, 1);
                     }}
+                    disabled={item.quantity >= (variant?.stockQuantity || 0)}
                   >
                     +
                   </button>

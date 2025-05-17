@@ -11,6 +11,9 @@ const HeaderCommonInfo = () => {
   const [searchValue, setSearchValue] = useState("");
   const [cartPreview, setCartPreview] = useState([]);
   const [showCartPreview, setShowCartPreview] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isShop, setIsShop] = useState(false);
+  const [isShipper, setIsShipper] = useState(false); // Thêm state này
 
   const handleSearch = () => {
     if (searchValue.trim()) {
@@ -25,6 +28,21 @@ const HeaderCommonInfo = () => {
       if (token) {
         fetchMyInfo().then(async user => {
           if (user && user.username) setUsername(user.username);
+          if (user && user.roles && user.roles.some(r => r.name === "ADMIN")) {
+            setIsAdmin(true);
+          } else {
+            setIsAdmin(false);
+          }
+          if (user && user.roles && user.roles.some(r => r.name === "SHOP")) {
+            setIsShop(true);
+          } else {
+            setIsShop(false);
+          }
+          if (user && user.roles && user.roles.some(r => r.name === "SHIPPER")) {
+            setIsShipper(true);
+          } else {
+            setIsShipper(false);
+          }
           if (user && user.id) {
             const cart = await fetchCartByUserId(user.id);
             setCartCount(cart?.cartItems?.length || 0);
@@ -77,6 +95,23 @@ const HeaderCommonInfo = () => {
     setShowCartPreview(false);
   };
 
+  // Xử lý dropdown user menu
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".header-user-dropdown")) {
+        setShowMenu(false);
+      }
+    };
+    if (showMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showMenu]);
+
   return (
     <header className="header-common">
       <div className="header-top">
@@ -93,11 +128,16 @@ const HeaderCommonInfo = () => {
         </div>
         <div className="header-top-right">
           <FaBell className="header-icon" />
-          <a href="#">Thông Báo</a>
+          <a href="/profile">Thông Báo</a>
           <FaQuestionCircle className="header-icon" />
           <a href="#">Hỗ Trợ</a>
           <span>|</span>
-          <div className="header-user-dropdown">
+          <div
+            className="header-user-dropdown"
+            onMouseEnter={() => setShowMenu(true)}
+            onMouseLeave={() => setShowMenu(false)}
+            style={{ position: "relative", display: "inline-block" }}
+          >
             <span
               className="header-link-bold"
               style={{
@@ -114,11 +154,29 @@ const HeaderCommonInfo = () => {
               <FaUserCircle style={{ marginRight: 4 }} />
               {username || "guest"}
             </span>
-            <div className="dropdown-menu">
-              <a href="/profile">Tài Khoản Của Tôi</a>
-              <a href="/orders">Đơn Mua</a>
-              <a href="#" onClick={handleLogout}>Đăng Xuất</a>
-            </div>
+            {showMenu && (
+              <div className="dropdown-menu">
+                <a href="/profile">Tài Khoản Của Tôi</a>
+                <a
+                  href="/profile"
+                  onClick={() => {
+                    localStorage.setItem("userpage_selected", "orders");
+                  }}
+                >
+                  Đơn Mua
+                </a>
+                {isAdmin && (
+                  <a href="/admin">ADMIN DASHBOARD</a>
+                )}
+                {!isAdmin && isShop && (
+                  <a href="/shop">SHOP DASHBOARD</a>
+                )}
+                {!isAdmin && isShipper && (
+                  <a href="/shipper">SHIPPER DASHBOARD</a>
+                )}
+                <a href="#" onClick={handleLogout}>Đăng Xuất</a>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -146,35 +204,35 @@ const HeaderCommonInfo = () => {
           </button>
         </div>
         <div
-  className="header-cart-wrapper"
-  style={{ position: "relative", display: "inline-block" }}
-  onMouseEnter={handleCartHover}
-  onMouseLeave={handleCartLeave}
->
-  <div className="header-cart">
-    <FaShoppingCart size={28} />
-    <span className="cart-badge">{cartCount}</span>
-  </div>
-  {showCartPreview && cartPreview.length > 0 && (
-    <div className="cart-preview-popup">
-      <div className="cart-preview-title">Sản Phẩm Mới Thêm</div>
-      {cartPreview.map((item, idx) => (
-        <div className="cart-preview-item" key={item.cartItemId || idx}>
-          <img
-            src={item.variant.productVariantImage}
-            alt={item.variant.variantValue}
-            className="cart-preview-img"
-          />
-          <span className="cart-preview-name">{item.variant.variantValue}</span>
-          <span className="cart-preview-price">
-            {item.variant.price?.toLocaleString()}₫
-          </span>
+          className="header-cart-wrapper"
+          style={{ position: "relative", display: "inline-block" }}
+          onMouseEnter={handleCartHover}
+          onMouseLeave={handleCartLeave}
+        >
+          <div className="header-cart">
+            <FaShoppingCart size={28} />
+            <span className="cart-badge">{cartCount}</span>
+          </div>
+          {showCartPreview && cartPreview.length > 0 && (
+            <div className="cart-preview-popup">
+              <div className="cart-preview-title">Sản Phẩm Mới Thêm</div>
+              {cartPreview.map((item, idx) => (
+                <div className="cart-preview-item" key={item.cartItemId || idx}>
+                  <img
+                    src={item.variant.productVariantImage}
+                    alt={item.variant.variantValue}
+                    className="cart-preview-img"
+                  />
+                  <span className="cart-preview-name">{item.variant.variantValue}</span>
+                  <span className="cart-preview-price">
+                    {item.variant.price?.toLocaleString()}₫
+                  </span>
+                </div>
+              ))}
+              <a href="/cart" className="cart-preview-btn">Xem Giỏ Hàng</a>
+            </div>
+          )}
         </div>
-      ))}
-      <a href="/cart" className="cart-preview-btn">Xem Giỏ Hàng</a>
-    </div>
-  )}
-</div>
       </div>
       <div className="header-suggest">
         <a href="#">Giày đá bóng nam</a>

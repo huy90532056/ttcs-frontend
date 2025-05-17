@@ -8,6 +8,8 @@ import {
   createOrder,
   createOrderItem,
   applyUserDiscount,
+  updateProductVariant,
+  clearCartById,
 } from "../../../apis";
 import { FaTicketAlt, FaCoins, FaCheckCircle } from "react-icons/fa";
 import "./PurchasePageBody.css";
@@ -126,17 +128,26 @@ const PurchasePageBody = () => {
         amount: totalPayment,
       });
 
-      // 2. Tạo từng order item
+      // 2. Tạo từng order item và cập nhật tồn kho
       await Promise.all(
-        cart.cartItems.map((item) =>
-          createOrderItem({
+        cart.cartItems.map(async (item) => {
+          await createOrderItem({
             variantId: item.variantId,
             quantity: item.quantity,
             totalPrice: variantsMap[item.variantId]?.price * item.quantity,
             orderId: order.orderId,
-          })
-        )
+          });
+          // Trừ tồn kho
+          const variant = variantsMap[item.variantId];
+          await updateProductVariant(item.variantId, {
+            ...variant,
+            stockQuantity: Math.max(0, (variant.stockQuantity || 0) - item.quantity),
+          });
+        })
       );
+
+      // 3. Clear cart
+      await clearCartById(cart.cartId);
 
       setShowOrderModal(true); // Hiện modal đặt hàng thành công
     } catch (err) {
@@ -178,7 +189,7 @@ const PurchasePageBody = () => {
         {cart?.cartItems?.map((item) => {
           const variant = variantsMap[item.variantId];
           return (
-            <div className="purchase-product-item" key={item.id}>
+            <div className="purchase-product-item" key={item.variantId}>
               <img
                 src={variant?.productVariantImage || ""}
                 alt={variant?.variantValue || ""}

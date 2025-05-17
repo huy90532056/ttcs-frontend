@@ -1,0 +1,241 @@
+.userpage-body-container {
+  display: flex;
+  min-height: 80vh;
+  background: #fafafa;
+  border-radius: 0 0 12px 12px;
+  margin-top: 0;
+  min-width: 1500px;
+}
+.userpage-sidebar {
+  width: 270px;
+  background: #fff;
+  border-radius: 12px;
+  margin: 24px 0 24px 24px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.07);
+  padding: 24px 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.userpage-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.userpage-avatar {
+  margin-bottom: 10px;
+}
+.userpage-username {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+.userpage-edit-profile {
+  font-size: 15px;
+  color: #ee4d2d;
+  margin-bottom: 8px;
+}
+.userpage-menu-item-btn {
+  border-radius: 8px;
+  margin-bottom: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+.userpage-menu-item-btn.selected,
+.userpage-menu-item-btn:hover {
+  background: #fff7f1;
+  color: #ee4d2d;
+}
+.userpage-menu-icon {
+  font-size: 20px;
+}
+.userpage-main-content {
+  flex: 1;
+  margin: 24px 24px 24px 0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 36px;
+  min-height: 600px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.07);
+}
+.admin-placeholder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.admin-placeholder-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: #fff7f1;
+  border: 1.5px solid #ffe1d2;
+  border-radius: 10px;
+  padding: 28px 32px;
+  font-size: 18px;
+  color: #ee4d2d;
+  min-width: 320px;
+  margin-bottom: 12px;
+}
+.admin-placeholder-title {
+  font-weight: 700;
+  font-size: 20px;
+  color: #222;
+}
+.admin-placeholder-desc {
+  font-size: 15px;
+  color: #888;
+  margin-left: 12px;
+}
+
+/* User table styles */
+.admin-user-list {
+  width: 100%;
+}
+.admin-user-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  margin-top: 8px;
+  table-layout: fixed;
+}
+.admin-user-table th,
+.admin-user-table td {
+  border: 1px solid #eee;
+  padding: 10px 8px;
+  text-align: left;
+}
+.admin-user-table th {
+  background: #fff7f1;
+  color: #ee4d2d;
+  font-weight: 600;
+}
+
+/* Chỉ áp dụng ellipsis cho các cột dữ liệu, không áp dụng cho cột hành động và biến thể */
+.admin-user-table td:not(:nth-last-child(-n+2)) {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Cột hành động: cho phép xuống dòng, không giới hạn chiều rộng, luôn hiển thị đủ nút */
+.admin-user-table td:nth-last-child(2) {
+  white-space: normal !important;
+  word-break: break-word;
+  max-width: 180px;
+  min-width: 120px;
+  overflow: visible;
+  text-overflow: unset;
+  text-align: right;
+  padding-right: 16px;
+}
+
+/* Cột biến thể */
+.admin-user-table td:last-child {
+  max-width: 120px;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+/* Input trong bảng */
+.admin-user-table input[type="text"],
+.admin-user-table input[type="date"] {
+  width: 100px;
+  max-width: 100%;
+  min-width: 0;
+  padding: 4px 6px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Button styles */
+.admin-user-btn {
+  margin: 4px 0 0 0;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  /* Cho phép xuống dòng nếu không đủ chỗ */
+  white-space: nowrap;
+}
+.admin-user-btn.edit {
+  background: #e3f0ff;
+  color: #1677ff;
+}
+.admin-user-btn.delete {
+  background: #ffeaea;
+  color: #ee4d2d;
+}
+.admin-user-btn.save {
+  background: #e6ffe6;
+  color: #43a047;
+}
+.admin-user-btn.cancel {
+  background: #eee;
+  color: #888;
+}
+
+.admin-user-table td:not(:nth-child(2)):not(:nth-last-child(-n+2)) {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-user-table td:nth-child(2) {
+  white-space: normal !important;
+  word-break: break-word;
+  max-width: 220px;
+  min-width: 120px;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.admin-user-table td:nth-child(7) {
+  white-space: normal !important;
+  word-break: break-word;
+  max-width: 300px;
+  min-width: 120px;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.admin-user-table td:nth-child(6) {
+  white-space: normal !important;
+  word-break: break-word;
+  max-width: 220px;
+  min-width: 120px;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.admin-user-table th:last-child,
+.admin-user-table td:last-child {
+  min-width: 140px;
+  width: 180px;
+  max-width: 220px;
+}
+
+.admin-user-table td:first-child {
+  white-space: normal !important;
+  word-break: break-all !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  max-width: none !important;
+}
+
+/* Cột Biến thể */
+.admin-user-table td:last-child {
+  max-width: 100px;  /* giảm từ 120px */
+  min-width: 80px;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}

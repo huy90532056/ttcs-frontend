@@ -69,6 +69,26 @@ const ProductPageBody = () => {
     if (type === "dec") setQuantity(q => (q > 1 ? q - 1 : 1));
   };
 
+  const handleBuyNow = async () => {
+  if (!selectedVariantId) {
+    toast.error("Vui lòng chọn phân loại sản phẩm!");
+    return;
+  }
+  try {
+    const user = await fetchMyInfo();
+    const cart = await fetchCartByUserId(user.id);
+    await addCartItem({
+      quantity,
+      variantId: selectedVariantId,
+      cartId: cart.cartId
+    });
+    window.dispatchEvent(new Event("cart-updated"));
+    window.location.href = "/cart";
+  } catch (err) {
+    toast.error("Có lỗi khi thêm vào giỏ hàng!");
+  }
+};
+
   // Thêm vào giỏ hàng
   const handleAddToCart = async () => {
   if (!selectedVariantId) {
@@ -294,13 +314,18 @@ const ProductPageBody = () => {
             <span>Số Lượng</span>
             <button className="productpage-quantity-btn" onClick={() => handleQuantity("dec")}>-</button>
             <input
-              type="number"
-              min={1}
-              value={quantity}
-              onChange={e => setQuantity(Math.max(1, Number(e.target.value)))}
-              className="productpage-quantity-input"
-            />
-            <button className="productpage-quantity-btn" onClick={() => handleQuantity("inc")}>+</button>
+  type="number"
+  min={1}
+  max={selectedVariant?.stockQuantity ?? variants[0]?.stockQuantity ?? 0}
+  value={quantity}
+  onChange={e => {
+    const max = selectedVariant?.stockQuantity ?? variants[0]?.stockQuantity ?? 0;
+    setQuantity(Math.max(1, Math.min(Number(e.target.value), max)));
+  }}
+  className="productpage-quantity-input"
+/>
+            <button className="productpage-quantity-btn" onClick={() => handleQuantity("inc")}
+              disabled={quantity >= (selectedVariant?.stockQuantity ?? variants[0]?.stockQuantity ?? 0)}>+</button>
             <span className="productpage-stock">
               {(selectedVariant?.stockQuantity ?? variants[0]?.stockQuantity ?? 0).toLocaleString()} sản phẩm có sẵn
             </span>
@@ -309,7 +334,7 @@ const ProductPageBody = () => {
             <button className="productpage-cart-btn" onClick={handleAddToCart}>
               Thêm Vào Giỏ Hàng
             </button>
-            <button className="productpage-buy-btn">
+            <button className="productpage-buy-btn" onClick={handleBuyNow}>
               Mua Ngay
             </button>
           </div>
