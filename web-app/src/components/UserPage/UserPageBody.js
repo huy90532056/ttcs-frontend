@@ -182,13 +182,13 @@ const UserPageBody = () => {
     // eslint-disable-next-line
   }, [orders, orderPage, selected]);
 
-    useEffect(() => {
-        const selectedTab = localStorage.getItem("userpage_selected");
-        if (selectedTab) {
-            setSelected(selectedTab);
-            localStorage.removeItem("userpage_selected");
-        }
-    }, []);
+  useEffect(() => {
+    const selectedTab = localStorage.getItem("userpage_selected");
+    if (selectedTab) {
+      setSelected(selectedTab);
+      localStorage.removeItem("userpage_selected");
+    }
+  }, []);
 
   if (checkingAuth) return null;
 
@@ -290,6 +290,7 @@ const UserPageBody = () => {
                           setEditData({
                             firstName: profile?.firstName || "",
                             lastName: profile?.lastName || "",
+                            address: profile?.address || "",
                             dob: profile?.dob || "",
                             roles: profile?.roles ? profile.roles.map(r => r.name) : []
                           });
@@ -328,6 +329,14 @@ const UserPageBody = () => {
                         <input
                           value={editData.firstName}
                           onChange={e => setEditData({ ...editData, firstName: e.target.value })}
+                          required
+                        />
+                      </div>
+                      <div className="userpage-profile-row">
+                        <label>Địa chỉ</label>
+                        <input
+                          value={editData.address}
+                          onChange={e => setEditData({ ...editData, address: e.target.value })}
                           required
                         />
                       </div>

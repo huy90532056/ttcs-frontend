@@ -11,7 +11,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { createCart } from "../../apis"; 
+import { createCart, updateUserById } from "../../apis"; 
 import authorizedAxiosInstance from "../../utils/authorizedAxios";
 import NewHeader from "../../components/header";
 import Container from "../../components/Container/Container";
@@ -50,22 +50,27 @@ export default function Home() {
     setSnackBarOpen(true);
   };
 
-  const getUserDetails = async () => {
+ const getUserDetails = async () => {
     try {
       const response = await authorizedAxiosInstance.get(
         "http://localhost:8080/ecommerce/users/myInfo"
       );
-
       const user = response.data.result;
-      setUserDetails(user);
-  
-      console.log(user);
       setUserDetails(user);
 
       if (user && user.id) {
-      await createCart(user.id);
-    }
+        await createCart(user.id);
+      }
 
+      if (user.roles.length === 0) {
+        await updateUserById(user.id, {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          address: user.address,
+          dob: user.dob,
+          roles: ["USER"]
+        });
+      }
     } catch (error) {
       console.error("Failed to fetch user details:", error);
     }

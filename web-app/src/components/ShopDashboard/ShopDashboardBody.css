@@ -78,7 +78,7 @@
 
 /* --- Table --- */
 .admin-user-list {
-  width: 100%;
+  width: 1350px;
 }
 
 .admin-user-table {
@@ -282,6 +282,14 @@
 .admin-user-table th:nth-child(12),
 .admin-user-table td:nth-child(12) {
   width: 95px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* --- Biến thể là cột cuối cùng, thu nhỏ lại --- */
+.admin-user-table th:last-child,
+.admin-user-table td:last-child {
+  width: 70px !important;
   text-align: center;
   white-space: nowrap;
 }

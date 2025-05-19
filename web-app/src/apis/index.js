@@ -485,3 +485,58 @@ export const deleteTagById = async (tagId) => {
   );
   return response.data.result;
 };
+
+export const createUser = async (userData) => {
+  const response = await authorizedAxiosInstance.post(
+    `${API_ROOT}/ecommerce/users`,
+    userData
+  );
+  return response.data.result;
+};
+
+export const createInventory = async ({ userId, imageFile }) => {
+  const formData = new FormData();
+  formData.append("userId", userId);
+  formData.append("imageFile", imageFile);
+
+  const response = await authorizedAxiosInstance.post(
+    `${API_ROOT}/ecommerce/inventories`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    }
+  );
+  return response.data.result;
+};
+
+export const createDiscount = async ({ discountCode, percentageOff, validFrom, validUntil }) => {
+  const response = await authorizedAxiosInstance.post(
+    `${API_ROOT}/ecommerce/discounts`,
+    { discountCode, percentageOff, validFrom, validUntil }
+  );
+  return response.data.result;
+};
+
+export const createReview = async ({ userId, productId, comment, rating }) => {
+  const response = await authorizedAxiosInstance.post(
+    `${API_ROOT}/ecommerce/reviews`,
+    { userId, productId, comment, rating }
+  );
+  return response.data.result;
+};
+
+export const deleteReviewById = async (reviewId) => {
+  const response = await authorizedAxiosInstance.delete(
+    `${API_ROOT}/ecommerce/reviews/${reviewId}`
+  );
+  return response.data.result;
+};
+
+export const createVnPayPayment = async ({ amount, bankCode }) => {
+  const response = await authorizedAxiosInstance.get(
+    `${API_ROOT}/ecommerce/payments/vn-pay?amount=${amount}&bankCode=${bankCode}`
+  );
+  return response.data.result;
+};

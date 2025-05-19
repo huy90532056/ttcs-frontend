@@ -10,6 +10,7 @@ import {
   applyUserDiscount,
   updateProductVariant,
   clearCartById,
+  createVnPayPayment,
 } from "../../../apis";
 import { FaTicketAlt, FaCoins, FaCheckCircle } from "react-icons/fa";
 import "./PurchasePageBody.css";
@@ -26,6 +27,10 @@ const PurchasePageBody = () => {
   const [selectedVoucher, setSelectedVoucher] = useState(null);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [showOrderModal, setShowOrderModal] = useState(false);
+
+  // Thêm state cho phương thức thanh toán và modal chọn phương thức
+  const [paymentMethod, setPaymentMethod] = useState("COD"); // "COD" hoặc "VNPAY"
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -113,18 +118,18 @@ const PurchasePageBody = () => {
     }
   };
 
-  // Xử lý đặt hàng
+  // Xử lý đặt hàng (chỉ cho COD)
   const handleOrder = async () => {
     if (!userInfo || !cart || !cart.cartItems?.length) return;
     setIsOrdering(true);
     try {
-      // 1. Tạo đơn hàng
+      // 1. Tạo đơn hàng (COD)
       const order = await createOrder({
         userId: userInfo.id,
         orderDate: new Date().toISOString().slice(0, 10),
         status: "PENDING",
         shippingMethod: "Vận chuyển đường bộ",
-        paymentMethod: "Thanh toán khi nhận hàng",
+        paymentMethod: paymentMethod === "VNPAY" ? "Thanh toán qua VNPAY" : "Thanh toán khi nhận hàng",
         amount: totalPayment,
       });
 
@@ -161,7 +166,27 @@ const PurchasePageBody = () => {
     window.location.href = "/";
   };
   const handleGoOrders = () => {
-    window.location.href = "/orders";
+    localStorage.setItem("userpage_selected", "orders");
+    window.location.href = "/profile";
+  };
+
+  // Xử lý mở modal chọn phương thức thanh toán
+  const handleOpenPaymentModal = () => setShowPaymentModal(true);
+  const handleClosePaymentModal = () => setShowPaymentModal(false);
+
+  // Xử lý chọn phương thức thanh toán
+  const handleSelectPaymentMethod = async (method) => {
+    setPaymentMethod(method);
+    setShowPaymentModal(false);
+
+    if (method === "VNPAY") {
+      try {
+        const { paymentUrl } = await createVnPayPayment({ amount: totalPayment, bankCode: "NCB" });
+        window.open(paymentUrl, "_blank");
+      } catch (err) {
+        alert("Không thể tạo thanh toán VNPAY!");
+      }
+    }
   };
 
   return (
@@ -343,7 +368,9 @@ const PurchasePageBody = () => {
           <span>Phương thức thanh toán</span>
           <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
             <span style={{ fontWeight: 400, fontSize: 16 }}>
-              Thanh toán khi nhận hàng
+              {paymentMethod === "COD"
+                ? "Thanh toán khi nhận hàng"
+                : "Thanh toán qua VNPAY"}
             </span>
             <button
               className="purchase-payment-change"
@@ -356,6 +383,7 @@ const PurchasePageBody = () => {
                 cursor: "pointer",
                 padding: 0,
               }}
+              onClick={handleOpenPaymentModal}
             >
               THAY ĐỔI
             </button>
@@ -490,6 +518,37 @@ const PurchasePageBody = () => {
           </button>
         </div>
       </div>
+
+      {/* Modal chọn phương thức thanh toán */}
+      {showPaymentModal && (
+        <div className="payment-modal-overlay">
+          <div className="payment-modal">
+            <div className="payment-modal-header">
+              <span>Chọn phương thức thanh toán</span>
+              <button
+                className="payment-modal-close"
+                onClick={handleClosePaymentModal}
+              >
+                ×
+              </button>
+            </div>
+            <div className="payment-modal-list">
+              <button
+                className={`payment-method-btn${paymentMethod === "COD" ? " selected" : ""}`}
+                onClick={() => handleSelectPaymentMethod("COD")}
+              >
+                Thanh toán khi nhận hàng
+              </button>
+              <button
+                className={`payment-method-btn${paymentMethod === "VNPAY" ? " selected" : ""}`}
+                onClick={() => handleSelectPaymentMethod("VNPAY")}
+              >
+                Thanh toán qua VNPAY
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Toast thông báo voucher thành công */}
       {showSuccessToast && (

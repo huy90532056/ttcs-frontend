@@ -26,9 +26,13 @@ import {
   fetchDiscounts,
   updateDiscountById,
   deleteDiscountById,
-  fetchProductVariantById
+  fetchProductVariantById,
+  createInventory,
+  createDiscount
 } from "../../apis";
 import "./AdminDashboardBody.css";
+import axios from "axios";
+
 
 const adminMenuItems = [
   { key: "users", icon: <FaUsers color="#ee4d2d" />, label: "Quản Lý User" },
@@ -75,6 +79,27 @@ const AdminDashboardBody = () => {
   // Order items (productVariant) state
   const [openOrderItems, setOpenOrderItems] = useState(null);
   const [orderVariantCache, setOrderVariantCache] = useState({});
+
+  const [showAddUser, setShowAddUser] = useState(false);
+  const [addUserData, setAddUserData] = useState({
+    username: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    dob: "",
+    address: "",
+    roles: [""],
+  });
+
+  const [showAddDiscount, setShowAddDiscount] = useState(false);
+  const [addDiscountData, setAddDiscountData] = useState({
+    discountCode: "",
+    percentageOff: "",
+    validFrom: "",
+    validUntil: "",
+  });
+
+  const [inventoryFile, setInventoryFile] = useState({});
 
   // Fetch admin info
   useEffect(() => {
@@ -138,11 +163,61 @@ const AdminDashboardBody = () => {
     }
   }, [openVariants]);
 
+  const createUser = async (userData) => {
+  const response = await axios.post("http://localhost:8080/ecommerce/users", userData);
+  return response.data.result;
+};
+
   // User handlers
   const handleDelete = async (userId) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa user này?")) {
-      await deleteUserById(userId);
-      setUsers(users.filter(u => u.id !== userId));
+        await deleteUserById(userId);
+        setUsers(users.filter(u => u.id !== userId));
+      }
+    };
+
+    const handleAddUser = async () => {
+    if (addUserData.username.length < 3) {
+      alert("Username phải có ít nhất 3 ký tự!");
+      return;
+    }
+    if (addUserData.password.length < 8) {
+      alert("Mật khẩu phải có ít nhất 8 ký tự!");
+      return;
+    }
+    try {
+      // Tạo user mới (không gửi roles)
+      const { roles, ...userData } = addUserData;
+      const createdUser = await createUser(userData);
+
+      // Nếu không nhập role thì mặc định là USER
+      let roleValue = addUserData.roles[0]?.trim();
+      if (!roleValue) {
+        roleValue = "USER";
+      }
+
+      await updateUserById(createdUser.id, {
+        firstName: addUserData.firstName,
+        lastName: addUserData.lastName,
+        address: addUserData.address,
+        dob: addUserData.dob,
+        roles: [roleValue]
+      });
+
+      setShowAddUser(false);
+      setAddUserData({
+        username: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        dob: "",
+        address: "",
+        roles: [""],
+      });
+      setUsers(await fetchAllUsers());
+    } catch (err) {
+      console.error("Lỗi khi thêm user:", err, err.response?.data);
+      alert("Thêm user thất bại!");
     }
   };
 
@@ -321,10 +396,15 @@ const AdminDashboardBody = () => {
   };
 
   const handleDeleteDiscount = async (discountId) => {
-    if (!window.confirm("Bạn có chắc chắn muốn xóa voucher này?")) return;
+  if (!window.confirm("Bạn có chắc chắn muốn xóa voucher này?")) return;
+  try {
     await deleteDiscountById(discountId);
     setDiscounts(discounts.filter(d => d.discountId !== discountId));
-  };
+  } catch (err) {
+    // In ra lỗi chi tiết nếu có
+    alert("Không thể xóa voucher này, có thể đang có người sử dụng!");
+  }
+};
 
   // Shipper users for order edit
   const shipperUsers = users.filter(
@@ -371,115 +451,231 @@ const AdminDashboardBody = () => {
       <div className="userpage-main-content">
         {selected === "users" && (
           <div className="admin-user-list">
-            <div style={{ fontSize: 20, fontWeight: 600, marginBottom: 18 }}>Danh sách User</div>
-            {loading ? (
-              <div>Đang tải...</div>
-            ) : (
-              <div style={{ overflowX: "auto" }}>
-                <table className="admin-user-table">
-                  <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Username</th>
-                        <th>Họ</th>
-                        <th>Tên</th>
-                        <th>Ngày sinh</th>
-                        <th>Địa chỉ</th>
-                        <th>Role</th>
-                        <th>Hành động</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {users.map(user => (
-                        <tr key={user.id}>
-                        <td>{user.id}</td>
-                        <td>{user.username}</td>
-                        <td>
-                            {editingUser === user.id ? (
-                            <input
-                                type="text"
-                                className="admin-user-input"
-                                value={editData.lastName}
-                                onChange={e => setEditData({ ...editData, lastName: e.target.value })}
-                            />
-                            ) : (
-                            user.lastName
-                            )}
-                        </td>
-                        <td>
-                            {editingUser === user.id ? (
-                            <input
-                                type="text"
-                                className="admin-user-input"
-                                value={editData.firstName}
-                                onChange={e => setEditData({ ...editData, firstName: e.target.value })}
-                            />
-                            ) : (
-                            user.firstName
-                            )}
-                        </td>
-                        <td>
-                            {editingUser === user.id ? (
-                            <input
-                                type="date"
-                                className="admin-user-input"
-                                value={editData.dob}
-                                onChange={e => setEditData({ ...editData, dob: e.target.value })}
-                            />
-                            ) : (
-                            user.dob
-                            )}
-                        </td>
-                        <td>
-                            {editingUser === user.id ? (
-                            <input
-                                type="text"
-                                className="admin-user-input"
-                                value={editData.address}
-                                onChange={e => setEditData({ ...editData, address: e.target.value })}
-                            />
-                            ) : (
-                            user.address || ""
-                            )}
-                        </td>
-                        <td>
-                            {editingUser === user.id ? (
-                            <input
-                                type="text"
-                                className="admin-user-input"
-                                value={editData.roles[0] || ""}
-                                onChange={e => setEditData({ ...editData, roles: [e.target.value] })}
-                            />
-                            ) : (
-                            user.roles && user.roles.length > 0
-                                ? user.roles.map(r => r.name).join(", ")
-                                : ""
-                            )}
-                        </td>
-                        <td>
-                            {editingUser === user.id ? (
-                            <>
-                                <button className="admin-user-btn save" onClick={() => handleSave(user.id)}>Lưu</button>
-                                <button className="admin-user-btn cancel" onClick={handleCancel}>Hủy</button>
-                            </>
-                            ) : (
-                            <>
-                                <button className="admin-user-btn edit" onClick={() => handleEdit(user)}>
-                                <FaEdit /> Sửa
-                                </button>
-                                <button className="admin-user-btn delete" onClick={() => handleDelete(user.id)}>
-                                <FaTrash /> Xóa
-                                </button>
-                            </>
-                            )}
-                        </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
-              </div>
-            )}
-          </div>
+  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
+    <div style={{ fontSize: 20, fontWeight: 600 }}>Danh sách User</div>
+    <button
+      className="admin-user-btn"
+      style={{ background: "#1677ff", color: "#fff" }}
+      onClick={() => setShowAddUser(true)}
+    >
+      + Thêm User
+    </button>
+  </div>
+  {showAddUser && (
+    <div style={{ background: "#fff", border: "1px solid #eee", borderRadius: 8, padding: 16, marginBottom: 16 }}>
+      <div style={{ fontWeight: 600, marginBottom: 8 }}>Thêm User mới</div>
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+        <input
+          className="admin-user-input"
+          placeholder="Username"
+          value={addUserData.username}
+          onChange={e => setAddUserData({ ...addUserData, username: e.target.value })}
+        />
+        <input
+          className="admin-user-input"
+          placeholder="Password"
+          type="password"
+          value={addUserData.password}
+          onChange={e => setAddUserData({ ...addUserData, password: e.target.value })}
+        />
+        <input
+          className="admin-user-input"
+          placeholder="Họ"
+          value={addUserData.lastName}
+          onChange={e => setAddUserData({ ...addUserData, lastName: e.target.value })}
+        />
+        <input
+          className="admin-user-input"
+          placeholder="Tên"
+          value={addUserData.firstName}
+          onChange={e => setAddUserData({ ...addUserData, firstName: e.target.value })}
+        />
+        <input
+          className="admin-user-input"
+          placeholder="Ngày sinh"
+          type="date"
+          value={addUserData.dob}
+          onChange={e => setAddUserData({ ...addUserData, dob: e.target.value })}
+        />
+        <input
+          className="admin-user-input"
+          placeholder="Địa chỉ"
+          value={addUserData.address}
+          onChange={e => setAddUserData({ ...addUserData, address: e.target.value })}
+        />
+        <input
+          className="admin-user-input"
+          placeholder="Role (USER/ADMIN/SHOP/SHIPPER)"
+          value={addUserData.roles[0]}
+          onChange={e => setAddUserData({ ...addUserData, roles: [e.target.value] })}
+        />
+      </div>
+      <div style={{ marginTop: 12 }}>
+        <button className="admin-user-btn save" onClick={handleAddUser}>Lưu</button>
+        <button className="admin-user-btn cancel" onClick={() => setShowAddUser(false)} style={{ marginLeft: 8 }}>Hủy</button>
+      </div>
+    </div>
+  )}
+  {loading ? (
+    <div>Đang tải...</div>
+  ) : (
+    <div style={{ overflowX: "auto" }}>
+      <table className="admin-user-table">
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Họ</th>
+            <th>Tên</th>
+            <th>Ngày sinh</th>
+            <th>Địa chỉ</th>
+            <th>Role</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map(user => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.username}</td>
+              <td>
+                {editingUser === user.id ? (
+                  <input
+                    type="text"
+                    className="admin-user-input"
+                    value={editData.lastName}
+                    onChange={e => setEditData({ ...editData, lastName: e.target.value })}
+                  />
+                ) : (
+                  user.lastName
+                )}
+              </td>
+              <td>
+                {editingUser === user.id ? (
+                  <input
+                    type="text"
+                    className="admin-user-input"
+                    value={editData.firstName}
+                    onChange={e => setEditData({ ...editData, firstName: e.target.value })}
+                  />
+                ) : (
+                  user.firstName
+                )}
+              </td>
+              <td>
+                {editingUser === user.id ? (
+                  <input
+                    type="date"
+                    className="admin-user-input"
+                    value={editData.dob}
+                    onChange={e => setEditData({ ...editData, dob: e.target.value })}
+                  />
+                ) : (
+                  user.dob
+                )}
+              </td>
+              <td>
+                {editingUser === user.id ? (
+                  <input
+                    type="text"
+                    className="admin-user-input"
+                    value={editData.address}
+                    onChange={e => setEditData({ ...editData, address: e.target.value })}
+                  />
+                ) : (
+                  user.address || ""
+                )}
+              </td>
+              <td>
+                {editingUser === user.id ? (
+                  <input
+                    type="text"
+                    className="admin-user-input"
+                    value={editData.roles[0] || ""}
+                    onChange={e => setEditData({ ...editData, roles: [e.target.value] })}
+                  />
+                ) : (
+                  user.roles && user.roles.length > 0
+                    ? user.roles.map(r => r.name).join(", ")
+                    : ""
+                )}
+              </td>
+              <td>
+  {editingUser === user.id ? (
+    <>
+      <button className="admin-user-btn save" onClick={() => handleSave(user.id)}>Lưu</button>
+      <button className="admin-user-btn cancel" onClick={handleCancel}>Hủy</button>
+    </>
+  ) : (
+    <>
+      <button className="admin-user-btn edit" onClick={() => handleEdit(user)}>
+        <FaEdit /> Sửa
+      </button>
+      <button className="admin-user-btn delete" onClick={() => handleDelete(user.id)}>
+        <FaTrash /> Xóa
+      </button>
+      {/* Thêm đoạn này */}
+      <input
+  type="file"
+  style={{ display: "none" }}
+  id={`inventory-file-${user.id}`}
+  onChange={e => {
+    setInventoryFile({ ...inventoryFile, [user.id]: e.target.files[0] });
+    // Sau khi chọn file, hỏi xác nhận
+    if (
+      user.roles &&
+      user.roles.some(r => (r.name || r) === "SHOP") // r có thể là object hoặc string
+    ) {
+      setTimeout(() => {
+        if (
+          window.confirm(
+            `Bạn có muốn tạo inventory cho user "${user.username}" không?`
+          )
+        ) {
+          const file = e.target.files[0];
+          createInventory({ userId: user.id, imageFile: file })
+            .then(() => {
+              alert("Tạo inventory thành công!");
+              setInventoryFile({ ...inventoryFile, [user.id]: undefined });
+            })
+            .catch(() => {
+              alert("Tạo inventory thất bại!");
+            });
+        }
+      }, 100); // Đợi input cập nhật state
+    } else {
+      alert("Chỉ user có role SHOP mới được tạo inventory!");
+      setInventoryFile({ ...inventoryFile, [user.id]: undefined });
+    }
+  }}
+/>
+<button
+  className="admin-user-btn"
+  style={{ background: "#e3f2fd", color: "#1976d2", marginLeft: 6 }}
+  onClick={() => {
+    // Kiểm tra role trước khi cho chọn file
+    if (
+      !user.roles ||
+      !user.roles.some(r => (r.name || r) === "SHOP")
+    ) {
+      alert("Chỉ user có role SHOP mới được tạo inventory!");
+      return;
+    }
+    document.getElementById(`inventory-file-${user.id}`).click();
+  }}
+>
+  🏬 Tạo inventory
+</button>
+    </>
+  )}
+</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+</div>
         )}
 
         {selected === "products" && (
@@ -502,7 +698,6 @@ const AdminDashboardBody = () => {
     <th>Category</th>
     <th>Tag</th>
     <th>Hành động</th>
-    <th>Biến thể</th>
   </tr>
 </thead>
 <tbody>
@@ -606,14 +801,12 @@ const AdminDashboardBody = () => {
               </button>
             </>
           )}
-        </td>
-        <td>
           <button
             className="admin-user-btn"
             onClick={() => handleOpenVariants(product.productId)}
             style={{ background: "#f1f8ff", color: "#1677ff" }}
           >
-            <FaEye /> Xem
+            <FaEye /> Xem biến thể
           </button>
         </td>
       </tr>
@@ -853,8 +1046,85 @@ const AdminDashboardBody = () => {
         )}
 
       {selected === "vouchers" && (
-          <div className="admin-user-list">
-            <div style={{ fontSize: 20, fontWeight: 600, marginBottom: 18 }}>Danh sách Voucher</div>
+  <div className="admin-user-list">
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
+      <div style={{ fontSize: 20, fontWeight: 600 }}>Danh sách Voucher</div>
+      <button
+        className="admin-user-btn"
+        style={{ background: "#1677ff", color: "#fff" }}
+        onClick={() => setShowAddDiscount(true)}
+      >
+        + Thêm Voucher
+      </button>
+    </div>
+    {showAddDiscount && (
+      <div style={{ background: "#fff", border: "1px solid #eee", borderRadius: 8, padding: 16, marginBottom: 16 }}>
+        <div style={{ fontWeight: 600, marginBottom: 8 }}>Thêm Voucher mới</div>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <input
+            className="admin-user-input"
+            placeholder="Mã voucher"
+            value={addDiscountData.discountCode}
+            onChange={e => setAddDiscountData({ ...addDiscountData, discountCode: e.target.value })}
+          />
+          <input
+            className="admin-user-input"
+            placeholder="Phần trăm giảm"
+            type="number"
+            value={addDiscountData.percentageOff}
+            onChange={e => setAddDiscountData({ ...addDiscountData, percentageOff: e.target.value })}
+          />
+          <input
+            className="admin-user-input"
+            placeholder="Ngày bắt đầu"
+            type="date"
+            value={addDiscountData.validFrom}
+            onChange={e => setAddDiscountData({ ...addDiscountData, validFrom: e.target.value })}
+          />
+          <input
+            className="admin-user-input"
+            placeholder="Ngày kết thúc"
+            type="date"
+            value={addDiscountData.validUntil}
+            onChange={e => setAddDiscountData({ ...addDiscountData, validUntil: e.target.value })}
+          />
+        </div>
+        <div style={{ marginTop: 12 }}>
+          <button
+            className="admin-user-btn save"
+            onClick={async () => {
+              try {
+                await createDiscount({
+                  discountCode: addDiscountData.discountCode,
+                  percentageOff: Number(addDiscountData.percentageOff),
+                  validFrom: addDiscountData.validFrom,
+                  validUntil: addDiscountData.validUntil,
+                });
+                setShowAddDiscount(false);
+                setAddDiscountData({
+                  discountCode: "",
+                  percentageOff: "",
+                  validFrom: "",
+                  validUntil: "",
+                });
+                setDiscounts(await fetchDiscounts());
+              } catch (err) {
+                alert("Thêm voucher thất bại!");
+              }
+            }}
+          >
+            Lưu
+          </button>
+          <button
+            className="admin-user-btn cancel"
+            onClick={() => setShowAddDiscount(false)}
+            style={{ marginLeft: 8 }}
+          >
+            Hủy
+          </button>
+        </div>
+      </div>
+    )}
             {loadingDiscounts ? (
               <div>Đang tải...</div>
             ) : (
