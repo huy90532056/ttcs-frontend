@@ -6,7 +6,8 @@ import {
   FaTrash,
   FaEye,
   FaPlus,
-  FaTags
+  FaTags,
+  FaChartBar
 } from "react-icons/fa";
 import {
   fetchMyInfo,
@@ -27,14 +28,78 @@ import {
   createCategory,
   deleteCategoryById,
   createTag,
-  deleteTagById
+  deleteTagById,
+  fetchAllOrders,
+  fetchOrderItemById,
+  fetchProductVariantById
 } from "../../apis";
 import "./ShopDashboardBody.css";
+
+// Hàm để lấy thông tin doanh số của shop
+// Hàm để lấy thông tin doanh số của shop
+const fetchShopSalesStatistics = async (userId) => {
+  // Lấy tất cả đơn hàng
+  const orders = await fetchAllOrders();
+  
+  // Lọc các đơn hàng có trạng thái đã giao hàng (SHIPPED)
+  const completedOrders = orders.filter(order => order.status === 'SHIPPED');
+  
+  // Lấy inventory của shop để kiểm tra sản phẩm
+  const shopInventories = await fetchInventoryByUserId(userId);
+  
+  // Tạo danh sách sản phẩm thuộc shop để kiểm tra nhanh hơn
+  const shopProductIds = [];
+  if (shopInventories && shopInventories.length > 0) {
+    shopInventories[0].productInventories.forEach(pi => {
+      shopProductIds.push(pi.product.productId);
+    });
+  }
+  
+  // Tạo mảng để lưu thông tin đơn hàng chi tiết
+  const orderDetails = [];
+  
+  // Duyệt qua từng đơn hàng
+  for (const order of completedOrders) {
+    // Đơn hàng đã có danh sách items, không cần gọi API riêng
+    if (order.items && order.items.length > 0) {
+      // Duyệt qua từng item trong đơn hàng
+      for (const item of order.items) {
+        // Lấy thông tin biến thể
+        const variant = await fetchProductVariantById(item.variantId);
+        
+        // Kiểm tra nếu sản phẩm thuộc về shop
+        if (variant && shopProductIds.includes(variant.productId)) {
+          // Lấy chi tiết sản phẩm để có tên
+          const productDetail = await fetchProductDetail(variant.productId);
+          
+          orderDetails.push({
+            orderId: order.orderId,
+            orderDate: order.orderDate,
+            productName: productDetail.productName || 'Không xác định',
+            quantity: item.quantity,
+            totalPrice: item.totalPrice
+          });
+        }
+      }
+    }
+  }
+  
+  // Tính tổng
+  const totalSoldItems = orderDetails.reduce((sum, item) => sum + item.quantity, 0);
+  const totalRevenue = orderDetails.reduce((sum, item) => sum + parseInt(item.totalPrice), 0);
+  
+  return {
+    totalSoldItems,
+    totalRevenue,
+    orderDetails
+  };
+};
 
 const shopMenuItems = [
   { key: "products", icon: <FaBoxOpen color="#1677ff" />, label: "Quản Lý Sản Phẩm" },
   { key: "categories", icon: <FaTags color="#1677ff" />, label: "Quản Lý Category" },
-  { key: "tags", icon: <FaTags color="#1677ff" />, label: "Quản Lý Tag" }
+  { key: "tags", icon: <FaTags color="#1677ff" />, label: "Quản Lý Tag" },
+  { key: "statistics", icon: <FaChartBar color="#1677ff" />, label: "Thống Kê Doanh Số" }
 ];
 
 const ShopDashboardBody = () => {
@@ -93,7 +158,11 @@ const ShopDashboardBody = () => {
 
   // State cho quản lý tag
   const [showAddTagModal, setShowAddTagModal] = useState(false);
- const [addTagData, setAddTagData] = useState({ tagName: "" });
+  const [addTagData, setAddTagData] = useState({ tagName: "" });
+  
+  // State cho thống kê doanh số
+  const [salesStatistics, setSalesStatistics] = useState(null);
+  const [loadingStatistics, setLoadingStatistics] = useState(false);
 
   useEffect(() => {
     fetchMyInfo().then(async info => {
@@ -126,6 +195,22 @@ const ShopDashboardBody = () => {
     // Fetch tất cả tag
     fetchTags().then(setTags);
   }, []);
+  
+  // Hàm để fetch thống kê doanh số khi chọn tab thống kê
+  useEffect(() => {
+    if (selected === "statistics" && shopInfo) {
+      setLoadingStatistics(true);
+      fetchShopSalesStatistics(shopInfo.id)
+        .then((stats) => {
+          setSalesStatistics(stats);
+          setLoadingStatistics(false);
+        })
+        .catch(error => {
+          console.error("Lỗi khi lấy thống kê:", error);
+          setLoadingStatistics(false);
+        });
+    }
+  }, [selected, shopInfo]);
 
   // Xem biến thể sản phẩm
   const handleOpenVariants = async (productId) => {
@@ -290,7 +375,6 @@ const ShopDashboardBody = () => {
       setShowAddVariant({ ...showAddVariant, [productId]: false });
       setAddVariantData(prev => ({ ...prev, [productId]: {} }));
       alert("Tạo biến thể thành công!");
-      // Có thể reload lại biến thể nếu muốn
     } catch (err) {
       alert("Có lỗi khi tạo biến thể!");
     }
@@ -403,12 +487,12 @@ const ShopDashboardBody = () => {
 
   // Quản lý tag
   const handleAddTagChange = e => {
-  const { name, value } = e.target;
-  setAddTagData(prev => ({
-    ...prev,
-    [name]: value
-  }));
-};
+    const { name, value } = e.target;
+    setAddTagData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const handleCreateTag = async e => {
     e.preventDefault();
@@ -434,6 +518,10 @@ const ShopDashboardBody = () => {
     }
   };
 
+  // Hàm định dạng số tiền
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+  };
 
   return (
     <div className="userpage-body-container">
@@ -1113,7 +1201,7 @@ const ShopDashboardBody = () => {
                 <tbody>
                   {tags.map(tag => (
                     <tr key={tag.tagId}>
-                      <td >{tag.tagId}</td>
+                      <td>{tag.tagId}</td>
                       <td style={{ textAlign: "center" }}>{tag.tagName}</td>
                       <td style={{ textAlign: "center" }}> 
                         <button
@@ -1152,6 +1240,96 @@ const ShopDashboardBody = () => {
             )}
           </div>
         )}
+        
+        {/* Phần Thống kê doanh số */}
+        {selected === "statistics" && (
+          <div className="admin-user-list">
+            <div style={{
+              fontSize: 20,
+              fontWeight: 600,
+              marginBottom: 18
+            }}>
+              <span>Thống Kê Doanh Số</span>
+            </div>
+            
+            {loadingStatistics ? (
+              <div style={{ textAlign: 'center', padding: '20px' }}>
+                <div>Đang tải thông tin thống kê...</div>
+              </div>
+            ) : salesStatistics ? (
+              <div>
+                <div style={{ 
+                  display: 'flex', 
+                  gap: '20px', 
+                  marginBottom: '24px' 
+                }}>
+                  <div style={{ 
+                    flex: 1, 
+                    padding: '20px', 
+                    backgroundColor: '#e6f7ff', 
+                    borderRadius: '8px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                  }}>
+                    <h3 style={{ margin: '0 0 10px 0', color: '#1677ff' }}>Tổng Sản Phẩm Đã Bán</h3>
+                    <div style={{ fontSize: '28px', fontWeight: '600' }}>
+                      {salesStatistics.totalSoldItems} sản phẩm
+                    </div>
+                  </div>
+                  
+                  <div style={{ 
+                    flex: 1, 
+                    padding: '20px', 
+                    backgroundColor: '#f6ffed', 
+                    borderRadius: '8px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                  }}>
+                    <h3 style={{ margin: '0 0 10px 0', color: '#52c41a' }}>Tổng Doanh Thu</h3>
+                    <div style={{ fontSize: '28px', fontWeight: '600' }}>
+                      {formatCurrency(salesStatistics.totalRevenue)}
+                    </div>
+                  </div>
+                </div>
+                
+                <div style={{ marginTop: '20px' }}>
+                  <h3>Chi tiết đơn hàng</h3>
+                  {salesStatistics.orderDetails && salesStatistics.orderDetails.length > 0 ? (
+                    <table className="admin-user-table">
+                      <thead>
+                        <tr>
+                          <th>Mã đơn hàng</th>
+                          <th>Ngày đặt</th>
+                          <th>Tên sản phẩm</th>
+                          <th>Số lượng</th>
+                          <th>Tổng tiền</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {salesStatistics.orderDetails.map((item, index) => (
+                          <tr key={index}>
+                            <td>{item.orderId}</td>
+                            <td>{new Date(item.orderDate).toLocaleDateString('vi-VN')}</td>
+                            <td>{item.productName}</td>
+                            <td>{item.quantity}</td>
+                            <td>{formatCurrency(item.totalPrice)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <div style={{ padding: '20px', textAlign: 'center', backgroundColor: '#fafafa', borderRadius: '8px' }}>
+                      Chưa có đơn hàng nào được hoàn thành
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div style={{ textAlign: 'center', padding: '20px' }}>
+                <div>Không có dữ liệu thống kê</div>
+              </div>
+            )}
+          </div>
+        )}
+        
       </div>
     </div>
   );

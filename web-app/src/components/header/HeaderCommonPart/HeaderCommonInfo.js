@@ -13,7 +13,7 @@ const HeaderCommonInfo = () => {
   const [showCartPreview, setShowCartPreview] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isShop, setIsShop] = useState(false);
-  const [isShipper, setIsShipper] = useState(false); // Thêm state này
+  const [isShipper, setIsShipper] = useState(false); 
 
   const handleSearch = () => {
     if (searchValue.trim()) {
@@ -44,9 +44,20 @@ const HeaderCommonInfo = () => {
             setIsShipper(false);
           }
           if (user && user.id) {
-            const cart = await fetchCartByUserId(user.id);
-            setCartCount(cart?.cartItems?.length || 0);
-          }
+  // Tạo hàm delay với Promise và setTimeout
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  
+  // Đợi 1 giây trước khi gọi API lấy giỏ hàng
+  await delay(1000);
+  
+  try {
+    const cart = await fetchCartByUserId(user.id);
+    setCartCount(cart?.cartItems?.length || 0);
+  } catch (error) {
+    console.error("Error fetching cart:", error);
+    setCartCount(0);
+  }
+}
         });
       }
     };

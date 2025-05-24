@@ -51,17 +51,25 @@ const ProductPageBody = () => {
   // Nhóm variant theo tên (ví dụ: Màu, Size)
   const groupVariants = (name) => variants.filter(v => v.variantName === name);
 
-  // Lấy các nhóm variant duy nhất
-  const variantNames = [...new Set(variants.map(v => v.variantName).filter(Boolean))];
+  // Xử lý tất cả các biến thể thành các nhóm riêng biệt
+  const variantGroups = {};
+  
+  // Xử lý variants và nhóm lại
+  variants.forEach(variant => {
+    // Nếu là default hoặc Basic, bỏ qua
+    if (variant.variantName === "default" || variant.variantValue === "Basic") {
+      return;
+    }
+    
+    // Nhóm các variants theo variantName
+    if (!variantGroups[variant.variantName]) {
+      variantGroups[variant.variantName] = [];
+    }
+    variantGroups[variant.variantName].push(variant);
+  });
 
-  // Gộp "Basic" vào nhóm "Màu" và đưa lên đầu
-  const colorVariants = [
-    ...variants.filter(v => (v.variantName === "default" || v.variantValue === "Basic")),
-    ...variants.filter(v => v.variantName === "Màu" && v.variantValue !== "Basic")
-  ];
-
-  // Các nhóm variant khác ngoài "default" và "Màu"
-  const otherVariantNames = variantNames.filter(name => name !== "default" && name !== "Màu");
+  // Danh sách các tên nhóm biến thể
+  const variantGroupNames = Object.keys(variantGroups);
 
   // Xử lý tăng giảm số lượng
   const handleQuantity = (type) => {
@@ -164,25 +172,25 @@ const ProductPageBody = () => {
         <div className="productpage-images">
           <img className="productpage-main-img" src={mainImage} alt={product.productName} />
           <div className="productpage-thumb-list">
-  {[product.productImage, ...variants.map(v => v.productVariantImage)]
-    .filter((img, idx, arr) => img && arr.indexOf(img) === idx)
-    .map((img, idx) => (
-      <img
-        key={idx}
-        src={img}
-        alt="thumb"
-        className={`productpage-thumb-img${mainImage === img ? " active" : ""}`}
-        onClick={() => {
-          const found = variants.find(v => v.productVariantImage === img);
-          if (found?.variantValue === "Basic") {
-            setSelectedVariantId(null);
-          } else {
-            setSelectedVariantId(found?.variantId || null);
-          }
-        }}
-      />
-    ))}
-</div>
+            {[product.productImage, ...variants.map(v => v.productVariantImage)]
+              .filter((img, idx, arr) => img && arr.indexOf(img) === idx)
+              .map((img, idx) => (
+                <img
+                  key={idx}
+                  src={img}
+                  alt="thumb"
+                  className={`productpage-thumb-img${mainImage === img ? " active" : ""}`}
+                  onClick={() => {
+                    const found = variants.find(v => v.productVariantImage === img);
+                    if (found?.variantValue === "Basic") {
+                      setSelectedVariantId(null);
+                    } else {
+                      setSelectedVariantId(found?.variantId || null);
+                    }
+                  }}
+                />
+              ))}
+          </div>
           <div className="productpage-share">
             <span>Chia sẻ:</span>
             <FaFacebookMessenger className="productpage-share-icon" />
@@ -210,21 +218,19 @@ const ProductPageBody = () => {
             <span>22,5k Sold</span>
           </div>
           <div className="productpage-flashsale">
-  <span className="productpage-flashsale-label">FLASH SALE</span>
-  <span className="productpage-flashsale-price">
-    {selectedVariant?.price?.toLocaleString() || product.price?.toLocaleString()}₫
-  </span>
-  <span className="productpage-flashsale-old">
-  {(
-    Math.ceil((selectedVariant?.price || product.price) / 0.75 / 1000) * 1000
-  ).toLocaleString()}₫
-</span>
-  <span className="productpage-flashsale-discount">-25%</span>
-  <span className="productpage-flashsale-timer">
-    <span>KẾT THÚC TRONG</span>
-    <span className="productpage-timer">00 10 21</span>
-  </span>
-</div>
+            <span className="productpage-flashsale-label">FLASH SALE</span>
+            <span className="productpage-flashsale-price">
+              {selectedVariant?.price?.toLocaleString() || product.price?.toLocaleString()}₫
+            </span>
+            <span className="productpage-flashsale-old">
+              {(Math.ceil((selectedVariant?.price || product.price) / 0.75 / 1000) * 1000).toLocaleString()}₫
+            </span>
+            <span className="productpage-flashsale-discount">-25%</span>
+            <span className="productpage-flashsale-timer">
+              <span>KẾT THÚC TRONG</span>
+              <span className="productpage-timer">00 10 21</span>
+            </span>
+          </div>
 
           {/* Thông tin bổ sung giống Shopee */}
           <div className="productpage-extra-info">
@@ -273,31 +279,12 @@ const ProductPageBody = () => {
             </div>
           </div>
 
-          {/* Nhóm variant "Màu" đã gộp "Basic" */}
-          {colorVariants.length > 0 && (
-  <div className="productpage-variant-group">
-    <div className="productpage-variant-label">Màu</div>
-    <div className="productpage-variant-list">
-      {colorVariants
-        .filter(v => v.variantValue !== "Basic") // Ẩn nút Basic
-        .map((v) => (
-          <button
-            key={v.variantId}
-            className={`productpage-variant-btn${selectedVariantId === v.variantId ? " selected" : ""}`}
-            onClick={() => setSelectedVariantId(v.variantId)}
-          >
-            {v.variantValue}
-          </button>
-        ))}
-    </div>
-  </div>
-)}
-          {/* Các nhóm variant khác */}
-          {otherVariantNames.map((name) => (
-            <div className="productpage-variant-group" key={name}>
-              <div className="productpage-variant-label">{name}</div>
+          {/* Hiển thị tất cả các nhóm biến thể */}
+          {variantGroupNames.map((groupName) => (
+            <div className="productpage-variant-group" key={groupName}>
+              <div className="productpage-variant-label">{groupName}</div>
               <div className="productpage-variant-list">
-                {groupVariants(name).map((v) => (
+                {variantGroups[groupName].map((v) => (
                   <button
                     key={v.variantId}
                     className={`productpage-variant-btn${selectedVariantId === v.variantId ? " selected" : ""}`}
@@ -309,23 +296,29 @@ const ProductPageBody = () => {
               </div>
             </div>
           ))}
+
           {/* Số lượng và nút mua */}
           <div className="productpage-quantity-row">
             <span>Số Lượng</span>
             <button className="productpage-quantity-btn" onClick={() => handleQuantity("dec")}>-</button>
             <input
-  type="number"
-  min={1}
-  max={selectedVariant?.stockQuantity ?? variants[0]?.stockQuantity ?? 0}
-  value={quantity}
-  onChange={e => {
-    const max = selectedVariant?.stockQuantity ?? variants[0]?.stockQuantity ?? 0;
-    setQuantity(Math.max(1, Math.min(Number(e.target.value), max)));
-  }}
-  className="productpage-quantity-input"
-/>
-            <button className="productpage-quantity-btn" onClick={() => handleQuantity("inc")}
-              disabled={quantity >= (selectedVariant?.stockQuantity ?? variants[0]?.stockQuantity ?? 0)}>+</button>
+              type="number"
+              min={1}
+              max={selectedVariant?.stockQuantity ?? variants[0]?.stockQuantity ?? 0}
+              value={quantity}
+              onChange={e => {
+                const max = selectedVariant?.stockQuantity ?? variants[0]?.stockQuantity ?? 0;
+                setQuantity(Math.max(1, Math.min(Number(e.target.value), max)));
+              }}
+              className="productpage-quantity-input"
+            />
+            <button 
+              className="productpage-quantity-btn" 
+              onClick={() => handleQuantity("inc")}
+              disabled={quantity >= (selectedVariant?.stockQuantity ?? variants[0]?.stockQuantity ?? 0)}
+            >
+              +
+            </button>
             <span className="productpage-stock">
               {(selectedVariant?.stockQuantity ?? variants[0]?.stockQuantity ?? 0).toLocaleString()} sản phẩm có sẵn
             </span>
